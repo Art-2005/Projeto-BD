@@ -15,7 +15,6 @@ public class ConexaoMySQL {
         }
     }
 
-    // Esse main aqui é só se você quiser testar a conexão
     public static void main(String[] args) {
         Connection conn = getConnection();
         System.out.println("Conexão realizada com sucesso!");
