@@ -28,15 +28,10 @@ public class EmpresaController {
         return ResponseEntity.ok(service.listarTodas());
     }
 
-    @PutMapping("/{cnpj}")
-    public ResponseEntity<Empresa> atualizar(@PathVariable String cnpj, @RequestBody Empresa empresaAtualizada) {
-        Empresa atualizada = service.atualizar(cnpj, empresaAtualizada);
-        return ResponseEntity.ok(atualizada);
-    }
-
     @DeleteMapping("/{cnpj}")
     public ResponseEntity<Void> deletar(@PathVariable String cnpj) {
         service.deletar(cnpj);
         return ResponseEntity.noContent().build();
     }
+
 }

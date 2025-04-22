@@ -14,7 +14,7 @@ public class Empresa {
 
     private String nome;
 
-    @Column(name = "NomeFantasia") // <- mapeamento explícito
+    @Column(name = "NomeFantasia")
     private String nomeFantasia;
 
     private String estado;
