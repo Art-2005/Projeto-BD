@@ -2,29 +2,7 @@ import React, { useState } from "react";
 import { criarEmpresa } from "../services/empresaService";
 
 const EmpresaForm = ({ onEmpresaCriada }) => {
-  const [empresa, setEmpresa] = useState({
-    cnpj: "",
-    nome: "",
-    nomeFantasia: "",
-    estado: "",
-    rua: "",
-    bairro: "",
-    cep: "",
-    numero: "",
-    chefia: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEmpresa({ ...empresa, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await criarEmpresa(empresa);
-      onEmpresaCriada();
-      setEmpresa({
+    const [empresa, setEmpresa] = useState({
         cnpj: "",
         nome: "",
         nomeFantasia: "",
@@ -33,28 +11,52 @@ const EmpresaForm = ({ onEmpresaCriada }) => {
         bairro: "",
         cep: "",
         numero: "",
-        chefia: "",
-      });
-    } catch (error) {
-      console.error("Erro ao criar empresa", error);
-    }
-  };
+        chefia: ""
+    });
 
-  return (
-    <form onSubmit={handleSubmit}>
-      {Object.keys(empresa).map((campo) => (
-        <input
-          key={campo}
-          type="text"
-          name={campo}
-          placeholder={campo}
-          value={empresa[campo]}
-          onChange={handleChange}
-        />
-      ))}
-      <button type="submit">Criar Empresa</button>
-    </form>
-  );
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setEmpresa({ ...empresa, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await criarEmpresa(empresa);
+            onEmpresaCriada();
+            setEmpresa({
+                cnpj: "",
+                nome: "",
+                nomeFantasia: "",
+                estado: "",
+                rua: "",
+                bairro: "",
+                cep: "",
+                numero: "",
+                chefia: ""
+            });
+            alert("Empresa cadastrada com sucesso!");
+        } catch (err) {
+            alert("Erro ao cadastrar empresa");
+            console.error(err);
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {Object.entries(empresa).map(([campo, valor]) => (
+                <input
+                    key={campo}
+                    name={campo}
+                    value={valor}
+                    onChange={handleChange}
+                    placeholder={campo}
+                    required
+                />
+            ))}
+            <button type="submit">Salvar Empresa</button>
+        </form>
+    );
 };
 
 export default EmpresaForm;

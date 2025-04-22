@@ -1,4 +1,4 @@
-create database esm extintores;
+create database esmextintores;
 
 CREATE TABLE Empresa (
     CNPJ varchar(100) PRIMARY KEY,

@@ -1,5 +1,6 @@
 package esmextintores.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -12,7 +13,10 @@ public class Empresa {
     private String cnpj;
 
     private String nome;
+
+    @Column(name = "NomeFantasia") // <- mapeamento explícito
     private String nomeFantasia;
+
     private String estado;
     private String rua;
     private String bairro;
@@ -34,6 +38,8 @@ public class Empresa {
         this.numero = numero;
         this.chefia = chefia;
     }
+
+    // getters e setters
 
     public String getCnpj() {
         return cnpj;

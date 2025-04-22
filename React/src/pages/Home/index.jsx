@@ -1,22 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EmpresaForm from "../../components/EmpresaForm";
 import EmpresaList from "../../components/EmpresaList";
+import { listarEmpresas } from "../../services/empresaService";
 
 const Home = () => {
-  const [reload, setReload] = useState(false);
+    const [empresas, setEmpresas] = useState([]);
 
-  const handleEmpresaCriada = () => {
-    setReload(!reload);
-  };
+    const carregarEmpresas = async () => {
+        const dados = await listarEmpresas();
+        setEmpresas(dados);
+    };
 
-  return (
-    <div>
-      <h1>Cadastro de Empresas</h1>
-      <EmpresaForm onEmpresaCriada={handleEmpresaCriada} />
-      <EmpresaList key={reload} />
-    </div>
-  );
+    useEffect(() => {
+        carregarEmpresas();
+    }, []);
+
+    return (
+        <div>
+            <h1>Cadastro de Empresas</h1>
+            <EmpresaForm onEmpresaCriada={carregarEmpresas} />
+            <EmpresaList empresas={empresas} />
+        </div>
+    );
 };
 
 export default Home;
-
