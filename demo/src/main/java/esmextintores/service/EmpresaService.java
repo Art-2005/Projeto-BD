@@ -16,7 +16,6 @@ public class EmpresaService {
     }
 
     public Empresa salvar(Empresa empresa) {
-        System.out.println(">>> Recebendo empresa no back-end:");
         System.out.println("CNPJ: " + empresa.getCnpj());
         System.out.println("Nome: " + empresa.getNome());
         System.out.println("Nome Fantasia: " + empresa.getNomeFantasia());
