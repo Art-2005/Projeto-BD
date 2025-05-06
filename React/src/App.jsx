@@ -40,20 +40,30 @@ function App() {
   };
 
   return (
-    <div>
-      <h2>Cadastro de Balcões</h2>
+    <div style={{
+      maxWidth: '400px',
+      margin: '150px',
+      padding: '20px',
+      border: '2px solid #ccc',
+      borderRadius: '8px',
+      backgroundColor: '#f9f9f9',
+      boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+    }}>
+      <h2 style={{ color: '#242424' }}>Cadastro de Balcões</h2>
+      <div style={{ textAlign: "center" }}>
       <form onSubmit={handleSubmit}>
-        <input name="cnpj" placeholder="CNPJ" value={novoBalcao.cnpj} onChange={handleChange} required />
-        <input name="telefone" placeholder="Telefone" value={novoBalcao.telefone} onChange={handleChange} />
-        <input name="estado" placeholder="Estado" value={novoBalcao.estado} onChange={handleChange} />
-        <input name="bairro" placeholder="Bairro" value={novoBalcao.bairro} onChange={handleChange} />
-        <input name="cep" placeholder="CEP" value={novoBalcao.cep} onChange={handleChange} />
-        <input name="rua" placeholder="Rua" value={novoBalcao.rua} onChange={handleChange} />
-        <input name="numero" placeholder="Número" value={novoBalcao.numero} onChange={handleChange} />
+        <input name="cnpj" placeholder="CNPJ" value={novoBalcao.cnpj} onChange={handleChange} required /><br />
+        <input name="telefone" placeholder="Telefone" value={novoBalcao.telefone} onChange={handleChange} /><br />
+        <input name="estado" placeholder="Estado" value={novoBalcao.estado} onChange={handleChange} /><br />
+        <input name="bairro" placeholder="Bairro" value={novoBalcao.bairro} onChange={handleChange} /><br />
+        <input name="cep" placeholder="CEP" value={novoBalcao.cep} onChange={handleChange} /><br />
+        <input name="rua" placeholder="Rua" value={novoBalcao.rua} onChange={handleChange} /><br />
+        <input name="numero" placeholder="Número" value={novoBalcao.numero} onChange={handleChange} /><br />
+        <br/>
         <button type="submit">Cadastrar</button>
       </form>
-
-      <h2>Lista de Balcões</h2>
+       
+      <h2 style={{ color: '#242424' }}>Lista de Balcões</h2>
       <ul>
         {balcoes.map((b) => (
           <li key={b.cnpj}>
@@ -63,6 +73,7 @@ function App() {
         ))}
       </ul>
     </div>
+  </div>
   );
 }
 
