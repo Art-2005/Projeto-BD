@@ -1,5 +1,13 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import CadastroBalcao from './components/CadastroBalcao';
+import CadastroCliente from './components/CadastroCliente';
+import CadastroComercial from './components/CadastroComercial';
+import CadastroEmpresa from './components/CadastroEmpresa';
+import CadastroFuncionario from './components/CadastroFuncionario';
+import CadastroIndustrial from './components/CadastroIndustrial';
+import CadastroManutencao from './components/CadastroManutencao';
+import CadastroRequisicao from './components/CadastroRequisicao';
 
 function App() {
   const [balcoes, setBalcoes] = useState([]);
@@ -300,218 +308,75 @@ const [novaRequisicao, setNovaRequisicao] = useState({
       
       <div style={{ display: 'flex', gap: '40px', padding: '20px' }}>
     
-        <div className="form-box">
-          <h2>Cadastro de Balcões</h2>
-          <form onSubmit={handleSubmitBalcao}>
-            <input name="cnpj" placeholder="CNPJ" value={novoBalcao.cnpj} onChange={handleChangeBalcao} required /><br />
-            <input name="telefone" placeholder="Telefone" value={novoBalcao.telefone} onChange={handleChangeBalcao} /><br />
-            <input name="estado" placeholder="Estado" value={novoBalcao.estado} onChange={handleChangeBalcao} /><br />
-            <input name="bairro" placeholder="Bairro" value={novoBalcao.bairro} onChange={handleChangeBalcao} /><br />
-            <input name="cep" placeholder="CEP" value={novoBalcao.cep} onChange={handleChangeBalcao} /><br />
-            <input name="rua" placeholder="Rua" value={novoBalcao.rua} onChange={handleChangeBalcao} /><br />
-            <input name="numero" placeholder="Número" value={novoBalcao.numero} onChange={handleChangeBalcao} /><br />
-            <br />
-            <button type="submit">Cadastrar Balcão</button>
-          </form>
+        <CadastroBalcao
+          novoBalcao={novoBalcao}
+          handleChangeBalcao={handleChangeBalcao}
+          handleSubmitBalcao={handleSubmitBalcao}
+          balcoes={balcoes}
+          deletarBalcao={deletarBalcao}
+        />
 
-          <h3>Lista de Balcões</h3>
-        <ul>
-          {balcoes.map((b) => (
-            <li key={b.cnpj}>
-              {b.cnpj} - {b.bairro}, {b.rua}, {b.numero}
-              <button onClick={() => deletarBalcao(b.cnpj)} style={{ marginLeft: '10px' }}>Deletar</button>
-            </li>
-          ))}
-        </ul>
-        </div>
+        <CadastroCliente
+          novoCliente={novoCliente}
+          handleChangeCliente={handleChangeCliente}
+          handleSubmitCliente={handleSubmitCliente}
+          clientes={clientes}
+          deletarCliente={deletarCliente}
+        />
 
-        <div className="form-box">
-          <h2>Cadastro de Clientes</h2>
-          <form onSubmit={handleSubmitCliente}>
-            <input name="numerocadastro" placeholder="Número de Cadastro" value={novoCliente.numerocadastro} onChange={handleChangeCliente} required /><br />
-            <input name="nome" placeholder="Nome" value={novoCliente.nome} onChange={handleChangeCliente} required /><br />
-            <input name="telefone" placeholder="Telefone" value={novoCliente.telefone} onChange={handleChangeCliente} /><br />
-            <input name="email" placeholder="Email" value={novoCliente.email} onChange={handleChangeCliente} /><br />
-            <input name="historico" placeholder="Histórico" value={novoCliente.historico} onChange={handleChangeCliente} /><br />
-            <input name="servicos" placeholder="Serviços" value={novoCliente.servicos} onChange={handleChangeCliente} /><br />
-            <br />
-            <button type="submit">Cadastrar Cliente</button>
-          </form>
+        <CadastroComercial
+         novoComercial = {novoComercial}
+         handleChangeComercial = {handleChangeComercial}
+         handleSubmitComercial = {handleSubmitComercial}
+         comerciais = {comerciais}
+         deletarComercial = {deletarComercial}
+        />
 
-          <h3>Lista de Clientes</h3>
-        <ul>
-          {clientes.map((c) => (
-            <li key={c.numerocadastro}>
-              {c.numerocadastro} - {c.nome} ({c.email})
-              <button onClick={() => deletarCliente(c.numerocadastro)} style={{ marginLeft: '10px' }}>Deletar</button>
-            </li>
-          ))}
-        </ul>
-        </div>
-
-        <div className="form-box">
-          <h2>Cadastro de Comerciais</h2>
-          <form onSubmit={handleSubmitComercial}>
-            <input name="cnpj" placeholder="CNPJ" value={novoComercial.cnpj} onChange={handleChangeComercial} required /><br />
-            <input name="nomeEmpresa" placeholder="Nome da Empresa" value={novoComercial.nomeEmpresa} onChange={handleChangeComercial} required /><br />
-            <input name="telefone" placeholder="Telefone" value={novoComercial.telefone} onChange={handleChangeComercial} /><br />
-            <input name="estado" placeholder="Estado" value={novoComercial.estado} onChange={handleChangeComercial} /><br />
-            <input name="bairro" placeholder="Bairro" value={novoComercial.bairro} onChange={handleChangeComercial} /><br />
-            <input name="cep" placeholder="CEP" value={novoComercial.cep} onChange={handleChangeComercial} /><br />
-            <input name="rua" placeholder="Rua" value={novoComercial.rua} onChange={handleChangeComercial} /><br />
-            <input name="numero" placeholder="Número" value={novoComercial.numero} onChange={handleChangeComercial} /><br />
-            <br />
-            <button type="submit">Cadastrar Comercial</button>
-          </form>
-          
-          <h3>Lista de Comerciais</h3>
-          <ul>
-            {comerciais.map((c) => (
-              <li key={c.cnpj}>
-                {c.nomeEmpresa} - {c.bairro}, {c.rua}, {c.numero}
-                <button onClick={() => deletarComercial(c.cnpj)} style={{ marginLeft: '10px' }}>Deletar</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-         <div className="form-box">
-          <h2>Cadastro de Empresas</h2>
-          <form onSubmit={handleSubmitEmpresa}>
-            <input name="cnpj" placeholder="CNPJ" value={novaEmpresa.cnpj} onChange={handleChangeEmpresa} required /><br />
-            <input name="nome" placeholder="Nome" value={novaEmpresa.nome} onChange={handleChangeEmpresa} required /><br />
-            <input name="nomeFantasia" placeholder="Nome Fantasia" value={novaEmpresa.nomeFantasia} onChange={handleChangeEmpresa} /><br />
-            <input name="estado" placeholder="Estado" value={novaEmpresa.estado} onChange={handleChangeEmpresa} /><br />
-            <input name="rua" placeholder="Rua" value={novaEmpresa.rua} onChange={handleChangeEmpresa} /><br />
-            <input name="bairro" placeholder="Bairro" value={novaEmpresa.bairro} onChange={handleChangeEmpresa} /><br />
-            <input name="cep" placeholder="CEP" value={novaEmpresa.cep} onChange={handleChangeEmpresa} /><br />
-            <input name="numero" placeholder="Número" value={novaEmpresa.numero} onChange={handleChangeEmpresa} /><br />
-            <input name="chefia" placeholder="Chefia" value={novaEmpresa.chefia} onChange={handleChangeEmpresa} /><br />
-            <br />
-            <button type="submit">Cadastrar Empresa</button>
-          </form>
-
-          <h3>Lista de Empresas</h3>
-          <ul>
-          {empresas.map((e) => (
-            <li key={e.cnpj}>
-              {e.cnpj} - {e.nome} ({e.nomeFantasia})
-              <button onClick={() => deletarEmpresa(e.cnpj)} style={{ marginLeft: '10px' }}>Deletar</button>
-            </li>
-          ))}
-        </ul>
-        </div>
+        <CadastroEmpresa
+          novaEmpresa = {novaEmpresa}
+          handleChangeEmpresa = {handleChangeEmpresa}
+          handleSubmitEmpresa = {handleSubmitEmpresa}
+          empresas = {empresas}
+          deletarEmpresa = {deletarEmpresa}
+        />
+        
       </div>
 
       {/* Restante dos formulários em coluna */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '40px', padding: '20px' }}>
       <div style={{ display: 'flex', gap: '40px', padding: '20px' }}>
        
-        <div className="form-box">
-          <h2>Cadastro de Funcionários</h2>
-          <form onSubmit={handleSubmitFuncionario}>
-            <input name="cpf" placeholder="CPF" value={novoFuncionario.cpf} onChange={handleChangeFuncionario} required /><br />
-            <input name="nome" placeholder="Nome" value={novoFuncionario.nome} onChange={handleChangeFuncionario} required /><br />
-            <input name="cargo" placeholder="Cargo" value={novoFuncionario.cargo} onChange={handleChangeFuncionario} /><br />
-            <input name="telefone" placeholder="Telefone" value={novoFuncionario.telefone} onChange={handleChangeFuncionario} /><br />
-            <input name="email" placeholder="Email" value={novoFuncionario.email} onChange={handleChangeFuncionario} /><br /><br />
-            <button type="submit">Cadastrar Funcionário</button>
-          </form>
+       <CadastroFuncionario
+        novoFuncionario={novoFuncionario}
+        handleChangeFuncionario={handleChangeFuncionario}
+        handleSubmitFuncionario={handleSubmitFuncionario}
+        funcionarios={funcionarios}
+        deletarFuncionario={deletarFuncionario}
+       />
 
-          <h3>Lista de Funcionários</h3>
-          <ul>
-            {funcionarios.map((f) => (
-              <li key={f.cpf}>
-                {f.cpf} - {f.nome} ({f.cargo})
-                <button onClick={() => deletarFuncionario(f.cpf)} style={{ marginLeft: '10px' }}>Deletar</button>
-              </li>
-            ))}
-          </ul>
-        </div>
+       <CadastroIndustrial
+          novoIndustrial={novoIndustrial}
+          handleChangeIndustrial={handleChangeIndustrial}
+          handleSubmitIndustrial={handleSubmitIndustrial}
+          industriais={industriais}
+          deletarIndustrial={deletarIndustrial}
+       />
 
-              <div className="form-box">
-        <h2>Cadastro de Industriais</h2>
-        <form onSubmit={handleSubmitIndustrial}>
-          <input name="cnpj" placeholder="CNPJ" value={novoIndustrial.cnpj} onChange={handleChangeIndustrial} required /><br />
-          <input name="nomeEmpresa" placeholder="Nome da Empresa" value={novoIndustrial.nomeEmpresa} onChange={handleChangeIndustrial} /><br />
-          <input name="telefone" placeholder="Telefone" value={novoIndustrial.telefone} onChange={handleChangeIndustrial} /><br />
-          <input name="estado" placeholder="Estado" value={novoIndustrial.estado} onChange={handleChangeIndustrial} /><br />
-          <input name="bairro" placeholder="Bairro" value={novoIndustrial.bairro} onChange={handleChangeIndustrial} /><br />
-          <input name="cep" placeholder="CEP" value={novoIndustrial.cep} onChange={handleChangeIndustrial} /><br />
-          <input name="rua" placeholder="Rua" value={novoIndustrial.rua} onChange={handleChangeIndustrial} /><br />
-          <input name="numero" placeholder="Número" value={novoIndustrial.numero} onChange={handleChangeIndustrial} /><br /><br />
-          <button type="submit">Cadastrar Industrial</button>
-        </form>
+       <CadastroManutencao
+        novaManutencao={novaManutencao}
+        setNovaManutencao={setNovaManutencao}
+        handleSubmitManutencao={handleSubmitManutencao}
+        manutencoes={manutencoes}
+        deletarManutencao={deletarManutencao}
+      />
 
-        <h3>Lista de Industriais</h3>
-        <ul>
-          {industriais.map((i) => (
-            <li key={i.cnpj}>
-              {i.nomeEmpresa} - {i.bairro}, {i.rua}, {i.numero}
-              <button onClick={() => deletarIndustrial(i.cnpj)} style={{ marginLeft: '10px' }}>Deletar</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-            <div className="form-box">
-        <h2>Cadastro de Manutenções</h2>
-        <form onSubmit={handleSubmitManutencao}>
-          <input
-            name="numeroregistro"
-            placeholder="Número de Registro"
-            value={novaManutencao.numeroregistro}
-            onChange={(e) => setNovaManutencao({ ...novaManutencao, numeroregistro: e.target.value })}
-            required
-          /><br />
-          <input
-            type="date"
-            name="data"
-            placeholder="Data"
-            value={novaManutencao.data}
-            onChange={(e) => setNovaManutencao({ ...novaManutencao, data: e.target.value })}
-          /><br />
-          <input
-            name="historico"
-            placeholder="Histórico"
-            value={novaManutencao.historico}
-            onChange={(e) => setNovaManutencao({ ...novaManutencao, historico: e.target.value })}
-          /><br /><br />
-          <button type="submit">Cadastrar Manutenção</button>
-        </form>
-
-        <h3>Lista de Manutenções</h3>
-        <ul>
-          {manutencoes.map((m) => (
-            <li key={m.numeroregistro}>
-              {m.numeroregistro} - {m.data} - {m.historico}
-              <button onClick={() => deletarManutencao(m.numeroregistro)} style={{ marginLeft: '10px' }}>
-                Deletar
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-              <div className="form-box">
-          <h2>Cadastro de Requisição</h2>
-          <form onSubmit={handleSubmitRequisicao}>
-            <input name="idFuncionario" placeholder="ID Funcionário" value={novaRequisicao.idFuncionario} onChange={handleChangeRequisicao} required /><br />
-            <input name="idCliente" placeholder="ID Cliente" value={novaRequisicao.idCliente} onChange={handleChangeRequisicao} required /><br />
-            <input name="data" placeholder="Data" type="date" value={novaRequisicao.data} onChange={handleChangeRequisicao} required /><br /><br />
-            <button type="submit">Cadastrar Requisição</button>
-          </form>
-
-          <h3>Lista de Requisições</h3>
-          <ul>
-            {requisicoes.map((r) => (
-              <li key={r.id}>
-                {r.id} - Funcionário: {r.idFuncionario}, Cliente: {r.idCliente}, Data: {r.data}
-                <button onClick={() => deletarRequisicao(r.id)} style={{ marginLeft: '10px' }}>Deletar</button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <CadastroRequisicao
+        novaRequisicao={novaRequisicao}
+        handleChangeRequisicao={handleChangeRequisicao}
+        handleSubmitRequisicao={handleSubmitRequisicao}
+        requisicoes={requisicoes}
+        deletarRequisicao={deletarRequisicao}
+      />    
 
       </div>
       </div>
