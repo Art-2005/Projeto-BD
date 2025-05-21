@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useBalcoes } from '../hooks_cadastro/useBalcoes';
 import { useClientes } from '../hooks_cadastro/useClientes';
 import { useComerciais } from '../hooks_cadastro/useComerciais';
@@ -19,7 +20,10 @@ import CadastroManutencao from '../components_cadastro/CadastroManutencao';
 import CadastroRequisicao from '../components_cadastro/CadastroRequisicao';
 
 export function Cadastro () {
-
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate('/');
+    };
     const {
         balcoes,
         novoBalcao,
@@ -84,10 +88,15 @@ export function Cadastro () {
         deletar: deletarRequisicao
     } = useRequisicoes();
 
-
     return (
 
         <div>
+
+            <div>
+                <button onClick={handleClick}>
+                    Voltar
+                </button>
+            </div>
 
             <div style={{display: 'flex', gap: '40px', padding: '20px'}}>
 
@@ -125,7 +134,6 @@ export function Cadastro () {
 
             </div>
 
-            {/* Restante dos formulários em coluna */}
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '40px', padding: '20px'}}>
                 <div style={{display: 'flex', gap: '40px', padding: '20px'}}>
 
@@ -164,19 +172,18 @@ export function Cadastro () {
                 </div>
             </div>
 
-            {/* Estilo global para as caixas de formulário */}
             <style>{`
-        .form-box {
-          max-width: 400px;
-          width: 100%;
-          padding: 20px;
-          border: 2px solid #ccc;
-          border-radius: 8px;
-          background-color: #f9f9f9;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-          text-align: center;
-        }
-      `}</style>
+                .form-box {
+                    max-width: 400px;
+                    width: 100%;
+                    padding: 20px;
+                    border: 2px solid #ccc;
+                    border-radius: 8px;
+                    background-color: #f9f9f9;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                    text-align: center;
+                }
+            `}</style>
         </div>
     )
 }
