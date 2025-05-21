@@ -9,9 +9,9 @@ export function HomePage () {
 
     return(
         <div>
-            <button onClick={handleClick}>
+            <button1 onClick={handleClick}>
                     Cadastrar
-                </button>
+                </button1>
         </div>
 
     )
