@@ -1,18 +1,24 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import CadastroBalcao from './components/CadastroBalcao';
-import CadastroCliente from './components/CadastroCliente';
-import CadastroComercial from './components/CadastroComercial';
-import CadastroEmpresa from './components/CadastroEmpresa';
-import CadastroFuncionario from './components/CadastroFuncionario';
-import CadastroIndustrial from './components/CadastroIndustrial';
-import CadastroManutencao from './components/CadastroManutencao';
-import CadastroRequisicao from './components/CadastroRequisicao';
+import CadastroBalcao from './components_cadastro/CadastroBalcao';
+import CadastroCliente from './components_cadastro/CadastroCliente';
+import CadastroComercial from './components_cadastro/CadastroComercial';
+import CadastroEmpresa from './components_cadastro/CadastroEmpresa';
+import CadastroFuncionario from './components_cadastro/CadastroFuncionario';
+import CadastroIndustrial from './components_cadastro/CadastroIndustrial';
+import CadastroManutencao from './components_cadastro/CadastroManutencao';
+import CadastroRequisicao from './components_cadastro/CadastroRequisicao';
 
 function App() {
+  
   const [balcoes, setBalcoes] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [funcionarios, setFuncionarios] = useState([]);
+  const [comerciais, setComerciais] = useState([]);
+  const [empresas, setEmpresas] = useState([]);
+  const [industriais, setIndustriais] = useState([]);
+  const [manutencoes, setManutencoes] = useState([]);
+  const [requisicoes, setRequisicoes] = useState([]);
 
   const [novoBalcao, setNovoBalcao] = useState({
     cnpj: "",
@@ -33,96 +39,93 @@ function App() {
     email: ""
   });
 
-  const [comerciais, setComerciais] = useState([]);
+  const [novoFuncionario, setNovoFuncionario] = useState({
+    cpf: "", 
+    nome: "", 
+    cargo: "", 
+    telefone: "", 
+    email: ""
+  });
+
   const [novoComercial, setNovoComercial] = useState({
-  cnpj: "",
-  nomeEmpresa: "",
-  telefone: "",
-  estado: "",
-  bairro: "",
-  cep: "",
-  rua: "",
-  numero: ""
-});
+    cnpj: "",
+    nomeEmpresa: "",
+    telefone: "",
+    estado: "",
+    bairro: "",
+    cep: "",
+    rua: "",
+    numero: ""
+  });
 
-const [empresas, setEmpresas] = useState([]);
+ const [novaEmpresa, setNovaEmpresa] = useState({
+    cnpj: "",
+    nome: "",
+    nomeFantasia: "",
+    estado: "",
+    rua: "",
+    bairro: "",
+    cep: "",
+    numero: "",
+    chefia: ""
+  });
 
-const [novaEmpresa, setNovaEmpresa] = useState({
-  cnpj: "",
-  nome: "",
-  nomeFantasia: "",
-  estado: "",
-  rua: "",
-  bairro: "",
-  cep: "",
-  numero: "",
-  chefia: ""
-});
-
-const [novoFuncionario, setNovoFuncionario] = useState({
-  cpf: "", nome: "", cargo: "", telefone: "", email: ""
-});
-
-const [industriais, setIndustriais] = useState([]);
-
-const [novoIndustrial, setNovoIndustrial] = useState({
-  cnpj: "",
-  telefone: "",
-  estado: "",
-  bairro: "",
-  cep: "",
-  rua: "",
-  numero: "",
-  nomeEmpresa: ""
+ const [novoIndustrial, setNovoIndustrial] = useState({
+    cnpj: "",
+    telefone: "",
+    estado: "",
+    bairro: "",
+    cep: "",
+    rua: "",
+    numero: "",
+    nomeEmpresa: ""
  });
 
- const [manutencoes, setManutencoes] = useState([]);
-
-const [novaManutencao, setNovaManutencao] = useState({
-  numeroregistro: "",
-  data: "",
-  historico: ""
+ const [novaManutencao, setNovaManutencao] = useState({
+    numeroregistro: "",
+    data: "",
+    historico: ""
  });
 
- const [requisicoes, setRequisicoes] = useState([]);
-const [novaRequisicao, setNovaRequisicao] = useState({
-  idFuncionario: "",
-  idCliente: "",
-  data: ""
-});
+ 
+ const [novaRequisicao, setNovaRequisicao] = useState({
+    idFuncionario: "",
+    idCliente: "",
+    data: ""
+  });
 
   useEffect(() => {
     axios.get("http://localhost:8080/balcoes")
-      .then(res => setBalcoes(res.data))
-      .catch(err => console.error("Erro ao carregar balcões:", err));
+     .then(res => setBalcoes(res.data))
+     .catch(err => console.error("Erro ao carregar balcões:", err));
 
     axios.get("http://localhost:8080/clientes")
-      .then(res => setClientes(res.data))
-      .catch(err => console.error("Erro ao carregar clientes:", err));
+     .then(res => setClientes(res.data))
+     .catch(err => console.error("Erro ao carregar clientes:", err));
 
     axios.get("http://localhost:8080/comerciais")
-    .then(res => setComerciais(res.data))
-    .catch(err => console.error("Erro ao carregar comerciais:", err));
+     .then(res => setComerciais(res.data))
+     .catch(err => console.error("Erro ao carregar comerciais:", err));
 
     axios.get("http://localhost:8080/empresas")
-   .then(res => setEmpresas(res.data))
-   .catch(err => console.error("Erro ao carregar empresas:", err));
+     .then(res => setEmpresas(res.data))
+     .catch(err => console.error("Erro ao carregar empresas:", err));
 
-   axios.get("http://localhost:8080/funcionarios")
-   .then(res => setFuncionarios(res.data))
-   .catch(err => console.error("Erro ao carregar funcionários:", err));
+    axios.get("http://localhost:8080/funcionarios")
+     .then(res => setFuncionarios(res.data))
+     .catch(err => console.error("Erro ao carregar funcionários:", err));
 
-   axios.get("http://localhost:8080/industriais")
-  .then(res => setIndustriais(res.data))
-  .catch(err => console.error("Erro ao carregar industriais:", err));
+    axios.get("http://localhost:8080/industriais")
+     .then(res => setIndustriais(res.data))
+     .catch(err => console.error("Erro ao carregar industriais:", err));
 
-  axios.get("http://localhost:8080/manutencoes")
-  .then(res => setManutencoes(res.data))
-  .catch(err => console.error("Erro ao carregar manutenções:", err));
+    axios.get("http://localhost:8080/manutencoes")
+     .then(res => setManutencoes(res.data))
+     .catch(err => console.error("Erro ao carregar manutenções:", err));
 
-  axios.get("http://localhost:8080/requisicoes")
-  .then(res => setRequisicoes(res.data))
-  .catch(err => console.error("Erro ao carregar requisições:", err));
+    axios.get("http://localhost:8080/requisicoes")
+     .then(res => setRequisicoes(res.data))
+     .catch(err => console.error("Erro ao carregar requisições:", err));
 
   }, []);
 
