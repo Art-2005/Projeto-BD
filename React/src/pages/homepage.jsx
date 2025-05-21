@@ -6,10 +6,11 @@ export function HomePage () {
     const handleClick = () => {
       navigate('/cadastro');
     };
+
     return(
         <div>
-                <button onClick={handleClick}>
-                    Ir para página 2
+            <button onClick={handleClick}>
+                    Cadastrar
                 </button>
         </div>
 
