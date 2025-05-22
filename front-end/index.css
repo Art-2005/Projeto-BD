@@ -18,3 +18,6 @@ body {
 .search-results button {
     margin-left: 10px;
 }
+button{
+    background-color: black;
+}
