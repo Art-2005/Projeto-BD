@@ -66,3 +66,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+h3{
+  color: #333;
+}
+
+h2{
+  color: #333;
+}
+
+.search-results {
+  color: black; /* Garante que o texto seja preto */
+}

@@ -18,14 +18,17 @@ export default function CadastroRequisicao({
           </form>
 
           <h3>Lista de Requisições</h3>
-          <ul>
-            {requisicoes.map((r) => (
-              <li key={r.id}>
-                {r.id} - Funcionário: {r.idFuncionario}, Cliente: {r.idCliente}, Data: {r.data}
-                <button onClick={() => deletarRequisicao(r.id)} style={{ marginLeft: '10px' }}>Deletar</button>
-              </li>
-            ))}
+          <ul className="search-results">
+              {requisicoes.map((r) => (
+                <li key={r.id}>
+                  {r.id} - Funcionário: {r.idFuncionario}, Cliente: {r.idCliente}, Data: {r.data}
+                  <button onClick={() => deletarRequisicao(r.id)} style={{ marginLeft: '10px' }}>Deletar</button>
+                </li>
+              ))}
           </ul>
+
         </div>
   );
 }
+
+
