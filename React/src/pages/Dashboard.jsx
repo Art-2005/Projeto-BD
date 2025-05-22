@@ -18,6 +18,7 @@ import CadastroFuncionario from '../components_cadastro/CadastroFuncionario'
 import CadastroIndustrial from '../components_cadastro/CadastroIndustrial'
 import CadastroManutencao from '../components_cadastro/CadastroManutencao'
 import CadastroRequisicao from '../components_cadastro/CadastroRequisicao'
+import {useNavigate} from "react-router-dom";
 const TABS = [
   'Balcões', 'Clientes', 'Comerciais', 'Empresas',
   'Funcionários', 'Industriais', 'Manutenções', 'Requisições'
@@ -25,6 +26,10 @@ const TABS = [
 
 
 function Cadastro() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/');
+  };
   const [activeTab, setActiveTab] = useState('Balcões');
 
   const { balcoes, novoBalcao, handleChange: handleChangeBalcao, handleSubmit: handleSubmitBalcao, deletar: deletarBalcao } = useBalcoes();
@@ -60,8 +65,27 @@ function Cadastro() {
   };
 
   return (
+
     <div style={{ padding: '30px', fontFamily: 'Arial, sans-serif' }}>
       <h1 style={{ fontSize: '2rem', marginBottom: '20px', textAlign: 'center' }}>Painel de Cadastros</h1>
+
+      <div style={{ marginBottom: '20px' }}>
+        <button
+            onClick={handleClick}
+            style={{
+              padding: '8px 16px',
+              backgroundColor:'#232323',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+            }}
+        >
+          Voltar para Home
+        </button>
+      </div>
 
       <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
         {TABS.map(tab => (
@@ -82,6 +106,7 @@ function Cadastro() {
           </button>
         ))}
       </div>
+
 
       <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'center' }}>
         <div style={{

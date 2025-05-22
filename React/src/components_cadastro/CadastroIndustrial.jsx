@@ -24,12 +24,14 @@ export default function CadastroIndustrial({
 
         <h3>Lista de Industriais</h3>
         <ul className="search-results">
-          {industriais.map((i) => (
-            <li key={i.cnpj}>
-              {i.nomeEmpresa} - {i.bairro}, {i.rua}, {i.numero}
-              <button onClick={() => deletarIndustrial(i.cnpj)} style={{ marginLeft: '10px' }}>Deletar</button>
-            </li>
-          ))}
+            {industriais.map((i) => (
+                <li key={i.cnpj}>
+                    {i.nomeEmpresa} - {i.bairro}, {i.rua}, {i.numero}
+                    <button onClick={() => deletarIndustrial(i.cnpj)} style={{ marginLeft: '10px' }}>
+                        Deletar
+                    </button>
+                </li>
+            ))}
         </ul>
     </div>
   );

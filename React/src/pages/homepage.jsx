@@ -4,8 +4,9 @@ export function HomePage () {
     const navigate = useNavigate();
     
     const handleClick = () => {
-      navigate('/cadastro');
+      navigate('/Dashboard');
     };
+
 
     return(
         <div>
@@ -13,6 +14,5 @@ export function HomePage () {
                     Cadastrar
                 </button1>
         </div>
-
     )
 }

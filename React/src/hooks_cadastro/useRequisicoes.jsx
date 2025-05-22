@@ -33,11 +33,14 @@ export function useRequisicoes() {
       .catch(err => console.error("Erro ao cadastrar requisição:", err));
   };
 
-  const deletar = (id) => {
-    axios.delete(`http://localhost:8080/requisicoes/${id}`)
-      .then(() => setRequisicoes(requisicoes.filter(r => r.id !== id)))
-      .catch(err => console.error("Erro ao deletar requisição:", err));
-  };
+    const deletar = (manutencaoId, empresaCnpj) => {
+        axios.delete(`http://localhost:8080/requisicoes/${manutencaoId}/${empresaCnpj}`)
+            .then(() => setRequisicoes(requisicoes.filter(r =>
+                !(r.manutencao.numeroRegistro === manutencaoId && r.empresa.cnpj === empresaCnpj)
+            )))
+            .catch(err => console.error("Erro ao deletar requisição:", err));
+    };
+
 
   return { requisicoes, novaRequisicao, handleChange, handleSubmit, deletar };
 }

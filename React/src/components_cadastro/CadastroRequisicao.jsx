@@ -11,8 +11,7 @@ export default function CadastroRequisicao({
       <div className="form-box">
           <h2>Cadastro de Requisição</h2>
           <form onSubmit={handleSubmitRequisicao}>
-            <input name="idFuncionario" placeholder="ID Funcionário" value={novaRequisicao.idFuncionario} onChange={handleChangeRequisicao} required /><br />
-            <input name="idCliente" placeholder="ID Cliente" value={novaRequisicao.idCliente} onChange={handleChangeRequisicao} required /><br />
+            <input name="id" placeholder="ID" value={novaRequisicao.id} onChange={handleChangeRequisicao} required /><br />
             <input name="data" placeholder="Data" type="date" value={novaRequisicao.data} onChange={handleChangeRequisicao} required /><br /><br />
             <button type="submit">Cadastrar Requisição</button>
           </form>
@@ -21,7 +20,7 @@ export default function CadastroRequisicao({
           <ul className="search-results">
               {requisicoes.map((r) => (
                 <li key={r.id}>
-                  {r.id} - Funcionário: {r.idFuncionario}, Cliente: {r.idCliente}, Data: {r.data}
+                  {r.id}, Data: {r.data}
                   <button onClick={() => deletarRequisicao(r.id)} style={{ marginLeft: '10px' }}>Deletar</button>
                 </li>
               ))}
