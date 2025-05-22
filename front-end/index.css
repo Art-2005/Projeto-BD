@@ -1,0 +1,20 @@
+body {
+    background-color: #7e4f4f;
+}
+.empresa-logo {
+    border-radius: 15px;
+}
+.form-box {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+.search-results li {
+    margin-bottom: 10px;
+}
+.search-results button {
+    margin-left: 10px;
+}
