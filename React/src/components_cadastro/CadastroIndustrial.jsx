@@ -23,7 +23,7 @@ export default function CadastroIndustrial({
         </form>
 
         <h3>Lista de Industriais</h3>
-        <ul>
+        <ul className="search-results">
           {industriais.map((i) => (
             <li key={i.cnpj}>
               {i.nomeEmpresa} - {i.bairro}, {i.rua}, {i.numero}

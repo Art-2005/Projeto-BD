@@ -25,7 +25,7 @@ export default function CadastroEmpresa({
           </form>
 
           <h3>Lista de Empresas</h3>
-          <ul>
+          <ul className="search-results">
           {empresas.map((e) => (
             <li key={e.cnpj}>
               {e.cnpj} - {e.nome} ({e.nomeFantasia})

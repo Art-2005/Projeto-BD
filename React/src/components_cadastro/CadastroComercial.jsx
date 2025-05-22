@@ -24,7 +24,7 @@ export default function CadastroComercial({
           </form>
           
           <h3>Lista de Comerciais</h3>
-          <ul>
+          <ul className="search-results">
             {comerciais.map((c) => (
               <li key={c.cnpj}>
                 {c.nomeEmpresa} - {c.bairro}, {c.rua}, {c.numero}

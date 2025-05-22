@@ -22,7 +22,7 @@ export default function CadastroBalcao({
       </form>
 
       <h3>Lista de Balcões</h3>
-      <ul>
+      <ul className="search-results">
         {balcoes.map((b) => (
           <li key={b.cnpj}>
             {b.cnpj} - {b.bairro}, {b.rua}, {b.numero}

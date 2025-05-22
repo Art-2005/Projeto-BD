@@ -20,7 +20,7 @@ export default function CadastroFuncionario({
           </form>
 
           <h3>Lista de Funcionários</h3>
-          <ul>
+          <ul className="search-results">
             {funcionarios.map((f) => (
               <li key={f.cpf}>
                 {f.cpf} - {f.nome} ({f.cargo})

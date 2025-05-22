@@ -22,7 +22,7 @@ export default function CadastroCliente({
           </form>
 
           <h3>Lista de Clientes</h3>
-        <ul>
+        <ul className="search-results">
           {clientes.map((c) => (
             <li key={c.numerocadastro}>
               {c.numerocadastro} - {c.nome} ({c.email})
