@@ -28,8 +28,8 @@ public class ClienteController {
         return ResponseEntity.ok(service.listarTodos());
     }
 
-    @DeleteMapping("/{numerocadastro}")
-    public ResponseEntity<Void> deletar(@PathVariable String numerocadastro) {
+    @DeleteMapping
+    public ResponseEntity<Void> deletar(@RequestParam String numerocadastro) {
         service.deletar(numerocadastro);
         return ResponseEntity.noContent().build();
     }

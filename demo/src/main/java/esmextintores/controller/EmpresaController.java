@@ -28,10 +28,9 @@ public class EmpresaController {
         return ResponseEntity.ok(service.listarTodas());
     }
 
-    @DeleteMapping("/{cnpj}")
-    public ResponseEntity<Void> deletar(@PathVariable String cnpj) {
+    @DeleteMapping
+    public ResponseEntity<Void> deletar(@RequestParam String cnpj) {
         service.deletar(cnpj);
         return ResponseEntity.noContent().build();
     }
-
 }

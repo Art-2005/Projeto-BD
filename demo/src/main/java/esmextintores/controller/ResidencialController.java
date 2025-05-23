@@ -1,30 +1,30 @@
 package esmextintores.controller;
 
-import esmextintores.model.Comercial;
-import esmextintores.service.ComercialService;
+import esmextintores.model.Residencial;
+import esmextintores.service.ResidencialService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/comerciais")
-public class ComercialController {
+@RequestMapping("/residenciais")
+public class ResidencialController {
 
-    private final ComercialService service;
+    private final ResidencialService service;
 
-    public ComercialController(ComercialService service) {
+    public ResidencialController(ResidencialService service) {
         this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<Comercial> criar(@RequestBody Comercial comercial) {
-        Comercial salvo = service.salvar(comercial);
+    public ResponseEntity<Residencial> criar(@RequestBody Residencial residencial) {
+        Residencial salvo = service.salvar(residencial);
         return ResponseEntity.ok(salvo);
     }
 
     @GetMapping
-    public ResponseEntity<List<Comercial>> listar() {
+    public ResponseEntity<List<Residencial>> listar() {
         return ResponseEntity.ok(service.listarTodos());
     }
 

@@ -4,53 +4,149 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastro de Clientes</title>
-    <link rel="stylesheet" href="/index.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/index.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .form-box {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body style="background-color: #7e4f4f;">
 <nav>
-    <div class="nav-container" style="align-items: left; margin-top: 10px; margin-left: 10px;">
-        <a href="cadastro.html" type="button" class="btn btn-dark me-2">Voltar</a>
+    <div class="nav-container" style="margin: 10px;">
+        <a href="cadastro.html" class="btn btn-dark">Voltar</a>
     </div>
 </nav>
+
 <div class="form-box">
     <h2>Cadastro de Clientes</h2>
-    <form>
+    <form id="formCliente">
+        <input type="hidden" name="modoEdicao" value="false" />
         <input name="numerocadastro" class="form-control mb-2" placeholder="Número de Cadastro" required />
         <input name="nome" class="form-control mb-2" placeholder="Nome" required />
         <input name="telefone" class="form-control mb-2" placeholder="Telefone" />
         <input name="email" class="form-control mb-2" placeholder="Email" />
         <input name="historico" class="form-control mb-2" placeholder="Histórico" />
         <input name="servicos" class="form-control mb-2" placeholder="Serviços" />
-        <button type="submit" class="btn btn-primary mt-2" style="color:black">Cadastrar Cliente</button>
+        <div class="d-flex gap-2">
+            <button type="submit" id="btnCadastrar" class="btn btn-success">Cadastrar Cliente</button>
+            <button type="button" id="btnAtualizar" class="btn btn-warning" style="display: none;">Atualizar Cliente</button>
+        </div>
     </form>
 
     <h3 class="mt-4">Lista de Clientes</h3>
-    </ul>
+    <ul id="listaClientes" class="list-group mt-2"></ul>
 </div>
-<script>
-    document.querySelector("form").addEventListener("submit", async function (e) {
-        e.preventDefault();
 
-        const formData = new FormData(this);
+<script>
+    const form = document.getElementById("formCliente");
+    const listaClientes = document.getElementById("listaClientes");
+    const btnCadastrar = document.getElementById("btnCadastrar");
+    const btnAtualizar = document.getElementById("btnAtualizar");
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const formData = new FormData(form);
         const cliente = {};
-        formData.forEach((value, key) => cliente[key] = value);
+        formData.forEach((value, key) => {
+            if (key !== "modoEdicao") cliente[key] = value;
+        });
 
         const response = await fetch("/clientes", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(cliente)
         });
 
         if (response.ok) {
             alert("Cliente cadastrado com sucesso!");
-            this.reset();
+            form.reset();
+            form.modoEdicao.value = "false";
+            form.elements["numerocadastro"].readOnly = false;
+            btnAtualizar.style.display = "none";
+            btnCadastrar.style.display = "inline-block";
+            carregarClientes();
         } else {
             alert("Erro ao cadastrar cliente.");
         }
     });
+
+    btnAtualizar.addEventListener("click", async function () {
+        const formData = new FormData(form);
+        const cliente = {};
+        formData.forEach((value, key) => {
+            if (key !== "modoEdicao") cliente[key] = value;
+        });
+
+        const response = await fetch("/clientes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(cliente)
+        });
+
+        if (response.ok) {
+            alert("Cliente atualizado com sucesso!");
+            form.reset();
+            form.modoEdicao.value = "false";
+            form.elements["numerocadastro"].readOnly = false;
+            btnAtualizar.style.display = "none";
+            btnCadastrar.style.display = "inline-block";
+            carregarClientes();
+        } else {
+            alert("Erro ao atualizar cliente.");
+        }
+    });
+
+    async function carregarClientes() {
+        const response = await fetch("/clientes");
+        const clientes = await response.json();
+        listaClientes.innerHTML = "";
+        clientes.forEach(c => {
+            const li = document.createElement("li");
+            li.className = "list-group-item d-flex justify-content-between align-items-center";
+            li.innerHTML = `
+        ${c.nome} (${c.numerocadastro}) - ${c.email}
+        <div>
+          <button class="btn btn-sm btn-warning me-1" onclick='editarCliente(${JSON.stringify(c)})'>Editar</button>
+          <button class="btn btn-sm btn-danger" onclick="deletarCliente('${c.numerocadastro}')">Deletar</button>
+        </div>
+      `;
+            listaClientes.appendChild(li);
+        });
+    }
+
+    function editarCliente(c) {
+        for (const key in c) {
+            if (form.elements[key]) {
+                form.elements[key].value = c[key];
+            }
+        }
+        form.modoEdicao.value = "true";
+        form.elements["numerocadastro"].readOnly = true;
+        btnCadastrar.style.display = "none";
+        btnAtualizar.style.display = "inline-block";
+    }
+
+    async function deletarCliente(numerocadastro) {
+        if (confirm("Deseja realmente deletar este cliente?")) {
+            const response = await fetch(`/clientes?numerocadastro=${encodeURIComponent(numerocadastro)}`, {
+                method: "DELETE"
+            });
+            if (response.ok) {
+                carregarClientes();
+            } else {
+                alert("Erro ao deletar cliente.");
+            }
+        }
+    }
+
+    window.onload = carregarClientes;
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

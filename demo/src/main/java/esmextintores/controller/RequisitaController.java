@@ -28,8 +28,8 @@ public class RequisitaController {
         return ResponseEntity.ok(service.listarTodas());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable String id) {
+    @DeleteMapping
+    public ResponseEntity<Void> deletar(@RequestParam String id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }

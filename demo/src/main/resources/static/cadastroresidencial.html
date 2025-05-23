@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .form-box {
-            max-width: 500px;
+            max-width: 600px;
             margin: 40px auto;
             background: #ffffff;
             padding: 30px;
@@ -18,32 +18,139 @@
     </style>
 </head>
 <body style="background-color: #7e4f4f;">
-
 <nav>
-    <div class="nav-container" style="align-items: left; margin-top: 10px; margin-left: 10px;">
-        <a href="cadastro.html" type="button" class="btn btn-dark me-2">Voltar</a>
+    <div class="nav-container" style="margin: 10px;">
+        <a href="cadastro.html" class="btn btn-dark">Voltar</a>
     </div>
 </nav>
 
 <div class="form-box">
     <h2>Cadastro Residencial</h2>
-    <form>
-        <input name="nome_residencial" class="form-control mb-2" placeholder="Nome Residencial" required />
-        <input name="CNPJ" class="form-control mb-2" placeholder="CNPJ" required />
+    <form id="formResidencial">
+        <input type="hidden" name="modoEdicao" value="false" />
+        <input name="cnpj" class="form-control mb-2" placeholder="CNPJ" required />
+        <input name="nomeResidencial" class="form-control mb-2" placeholder="Nome Residencial" required />
         <input name="telefone" class="form-control mb-2" placeholder="Telefone" />
         <input name="estado" class="form-control mb-2" placeholder="Estado" />
         <input name="bairro" class="form-control mb-2" placeholder="Bairro" />
-        <input name="CEP" class="form-control mb-2" placeholder="CEP" />
+        <input name="cep" class="form-control mb-2" placeholder="CEP" />
         <input name="rua" class="form-control mb-2" placeholder="Rua" />
         <input name="numero" class="form-control mb-2" placeholder="Número" />
         <input name="fk_Cliente_numerocadastro" class="form-control mb-2" placeholder="Número de Cadastro do Cliente Vinculado" />
-
-        <button type="submit" class="btn btn-primary mt-2" style="color:black">Cadastrar Residencial</button>
+        <div class="d-flex gap-2">
+            <button type="submit" id="btnCadastrar" class="btn btn-success">Cadastrar Residencial</button>
+            <button type="button" id="btnAtualizar" class="btn btn-warning" style="display: none;">Atualizar Residencial</button>
+        </div>
     </form>
 
     <h3 class="mt-4">Lista de Residenciais</h3>
-
+    <ul id="listaResidenciais" class="list-group mt-2"></ul>
 </div>
+
+<script>
+    const form = document.getElementById("formResidencial");
+    const listaResidenciais = document.getElementById("listaResidenciais");
+    const btnCadastrar = document.getElementById("btnCadastrar");
+    const btnAtualizar = document.getElementById("btnAtualizar");
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const residencial = {};
+        formData.forEach((value, key) => {
+            if (key !== "modoEdicao") residencial[key] = value;
+        });
+
+        const response = await fetch("/residenciais", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(residencial)
+        });
+
+        if (response.ok) {
+            alert("Residencial cadastrado com sucesso!");
+            form.reset();
+            form.modoEdicao.value = "false";
+            form.elements["cnpj"].readOnly = false;
+            btnAtualizar.style.display = "none";
+            btnCadastrar.style.display = "inline-block";
+            carregarResidenciais();
+        } else {
+            alert("Erro ao cadastrar residencial.");
+        }
+    });
+
+    btnAtualizar.addEventListener("click", async function () {
+        const formData = new FormData(form);
+        const residencial = {};
+        formData.forEach((value, key) => {
+            if (key !== "modoEdicao") residencial[key] = value;
+        });
+
+        const response = await fetch("/residenciais", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(residencial)
+        });
+
+        if (response.ok) {
+            alert("Residencial atualizado com sucesso!");
+            form.reset();
+            form.modoEdicao.value = "false";
+            form.elements["cnpj"].readOnly = false;
+            btnAtualizar.style.display = "none";
+            btnCadastrar.style.display = "inline-block";
+            carregarResidenciais();
+        } else {
+            alert("Erro ao atualizar residencial.");
+        }
+    });
+
+    async function carregarResidenciais() {
+        const response = await fetch("/residenciais");
+        const residenciais = await response.json();
+        listaResidenciais.innerHTML = "";
+        residenciais.forEach(r => {
+            const li = document.createElement("li");
+            li.className = "list-group-item d-flex justify-content-between align-items-center";
+            li.innerHTML = `
+        ${r.nomeResidencial ?? "Sem nome"} (${r.cnpj}) - ${r.estado ?? ""}
+        <div>
+          <button class="btn btn-sm btn-warning me-1" onclick='editarResidencial(${JSON.stringify(r)})'>Editar</button>
+          <button class="btn btn-sm btn-danger" onclick="deletarResidencial('${r.cnpj}')">Deletar</button>
+        </div>
+      `;
+            listaResidenciais.appendChild(li);
+        });
+    }
+
+    function editarResidencial(r) {
+        for (const key in r) {
+            if (form.elements[key]) {
+                form.elements[key].value = r[key];
+            }
+        }
+        form.modoEdicao.value = "true";
+        form.elements["cnpj"].readOnly = true;
+        btnCadastrar.style.display = "none";
+        btnAtualizar.style.display = "inline-block";
+    }
+
+    async function deletarResidencial(cnpj) {
+        if (confirm("Deseja realmente deletar este residencial?")) {
+            const response = await fetch(`/residenciais?cnpj=${encodeURIComponent(cnpj)}`, {
+                method: "DELETE"
+            });
+            if (response.ok) {
+                carregarResidenciais();
+            } else {
+                alert("Erro ao deletar residencial.");
+            }
+        }
+    }
+
+    window.onload = carregarResidenciais;
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
