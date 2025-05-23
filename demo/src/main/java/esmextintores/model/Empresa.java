@@ -16,7 +16,6 @@ public class Empresa {
 
     @Column(name = "NomeFantasia")
     private String nomeFantasia;
-
     private String estado;
     private String rua;
     private String bairro;

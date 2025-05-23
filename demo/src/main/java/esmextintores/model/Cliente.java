@@ -10,7 +10,6 @@ public class Cliente {
 
     @Id
     private String numerocadastro;
-
     private String nome;
     private String telefone;
     private String historico;

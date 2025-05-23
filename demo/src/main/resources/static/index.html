@@ -1,129 +1,79 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Empresas - ESM Extintores</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Menu Principal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/index.css">
+
+
+
 </head>
-<body class="p-4">
-<div class="container">
-    <h1 class="mb-4">Cadastro de Empresas</h1>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-bottom: 20px;">
+    <div class="container-fluid">
 
-    <form id="empresaForm">
-        <div class="row g-2">
-            <div class="col-md-3"><input type="text" id="cnpj" class="form-control" placeholder="CNPJ" required></div>
-            <div class="col-md-3"><input type="text" id="nome" class="form-control" placeholder="Nome" required></div>
-            <div class="col-md-3"><input type="text" id="nomeFantasia" class="form-control" placeholder="Nome Fantasia"></div>
-            <div class="col-md-3"><input type="text" id="estado" class="form-control" placeholder="Estado"></div>
-            <div class="col-md-3"><input type="text" id="rua" class="form-control" placeholder="Rua"></div>
-            <div class="col-md-3"><input type="text" id="bairro" class="form-control" placeholder="Bairro"></div>
-            <div class="col-md-3"><input type="text" id="cep" class="form-control" placeholder="CEP"></div>
-            <div class="col-md-3"><input type="text" id="numero" class="form-control" placeholder="Número"></div>
-            <div class="col-md-3"><input type="text" id="chefia" class="form-control" placeholder="Chefia"></div>
+        <div class="collapse navbar-collapse justify-content-center">
+            <div class="d-flex">
+                <a href="dashboard.html" type="button" class="btn btn-dark me-2">Dashboard</a>
+                <button type="button" class="btn btn-dark me-2">NAO SEI AINDA</button>
+                <a href="cadastro.html" type="button" class="btn btn-dark">Cadastrar</a>
+            </div>
         </div>
-        <div class="mt-3">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <button type="button" id="cancelarEdicao" class="btn btn-secondary d-none">Cancelar</button>
+    </div>
+</nav>
+
+
+<main class="main-content">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; margin-bottom: 40px;">
+        <a href="index.html" class="logo-container" style="margin-left: 15px;">
+            <img src="/images/logo.png" alt="Logo da Empresa" class="empresa-logo" style="max-width: 250px; border-radius: 12px;">
+        </a>
+
+        <div style="flex: 1 1 400px; background-color: #ffffff; padding: 25px; border-radius: 12px; min-width: 280px; margin-right:15px">
+            <h1 style="font-size: 26px; color: #000000; margin-bottom: 10px;">Bem-vindo ao Sistema de Gestão</h1>
+            <p style="font-size: 16px; color: #000000;">
+                Esse sistema tem o intuito de digitalizar e facilitar o trabalho da empresa <strong>ESM Extintores</strong>.
+            </p>
         </div>
-    </form>
 
-    <hr>
-
-    <h2 class="mb-3">Empresas Cadastradas</h2>
-    <table class="table table-bordered" id="tabelaEmpresas">
-        <thead>
-        <tr>
-            <th>CNPJ</th>
-            <th>Nome Fantasia</th>
-            <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
+    </div>
+</main>
 
 <script>
-    const urlBase = '/empresas';
-    let editandoCnpj = null;
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.main-content');
+        const toggleBtn = document.querySelector('.toggle-btn');
 
-    async function carregarEmpresas() {
-        const res = await fetch(urlBase);
-        const empresas = await res.json();
-        const tbody = document.querySelector("#tabelaEmpresas tbody");
-        tbody.innerHTML = '';
-        empresas.forEach(emp => {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-                    <td>${emp.cnpj}</td>
-                    <td>${emp.nomeFantasia}</td>
-                    <td>
-                        <button class="btn btn-sm btn-warning" onclick='editarEmpresa(${JSON.stringify(emp)})'>Editar</button>
-                        <button class="btn btn-sm btn-danger" onclick='removerEmpresa("${emp.cnpj}")'>Remover</button>
-                    </td>
-                `;
-            tbody.appendChild(tr);
-        });
+        const isCollapsed = sidebar.classList.toggle('collapsed');
+        content.classList.toggle('collapsed');
+        toggleBtn.style.left = isCollapsed ? '80px' : '280px';
+
+        localStorage.setItem('sidebar-collapsed', isCollapsed ? 'true' : 'false');
     }
+    window.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.main-content');
+        const toggleBtn = document.querySelector('.toggle-btn');
 
-    document.getElementById("empresaForm").addEventListener("submit", async e => {
-        e.preventDefault();
-        const empresa = {
-            cnpj: document.getElementById("cnpj").value,
-            nome: document.getElementById("nome").value,
-            nomeFantasia: document.getElementById("nomeFantasia").value,
-            estado: document.getElementById("estado").value,
-            rua: document.getElementById("rua").value,
-            bairro: document.getElementById("bairro").value,
-            cep: document.getElementById("cep").value,
-            numero: document.getElementById("numero").value,
-            chefia: document.getElementById("chefia").value,
-        };
+        const collapsed = localStorage.getItem('sidebar-collapsed') === 'true';
 
-        const metodo = editandoCnpj ? 'PUT' : 'POST';
-        const url = editandoCnpj ? `${urlBase}/${empresa.cnpj}` : urlBase;
-
-        await fetch(url, {
-            method: metodo,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(empresa)
-        });
-
-        document.getElementById("empresaForm").reset();
-        document.getElementById("cancelarEdicao").classList.add("d-none");
-        editandoCnpj = null;
-        carregarEmpresas();
-    });
-
-    function editarEmpresa(empresa) {
-        editandoCnpj = empresa.cnpj;
-        document.getElementById("cnpj").value = empresa.cnpj;
-        document.getElementById("nome").value = empresa.nome;
-        document.getElementById("nomeFantasia").value = empresa.nomeFantasia;
-        document.getElementById("estado").value = empresa.estado;
-        document.getElementById("rua").value = empresa.rua;
-        document.getElementById("bairro").value = empresa.bairro;
-        document.getElementById("cep").value = empresa.cep;
-        document.getElementById("numero").value = empresa.numero;
-        document.getElementById("chefia").value = empresa.chefia;
-
-        document.getElementById("cancelarEdicao").classList.remove("d-none");
-    }
-
-    async function removerEmpresa(cnpj) {
-        if (confirm("Deseja realmente remover esta empresa?")) {
-            await fetch(`${urlBase}/${cnpj}`, { method: 'DELETE' });
-            carregarEmpresas();
+        if (collapsed) {
+            sidebar.classList.add('collapsed');
+            content.classList.add('collapsed');
+            toggleBtn.style.left = '80px';
+        } else {
+            toggleBtn.style.left = '280px';
         }
-    }
 
-    document.getElementById("cancelarEdicao").addEventListener("click", () => {
-        document.getElementById("empresaForm").reset();
-        editandoCnpj = null;
-        document.getElementById("cancelarEdicao").classList.add("d-none");
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            }
+        });
     });
-
-    carregarEmpresas();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

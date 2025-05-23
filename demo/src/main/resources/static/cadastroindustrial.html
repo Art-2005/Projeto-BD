@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cadastro de Empresa</title>
+    <title>Cadastro Industrial</title>
     <link rel="stylesheet" href="/index.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -26,22 +26,24 @@
 </nav>
 
 <div class="form-box">
-    <h2>Cadastro de Empresa</h2>
+    <h2>Cadastro Industrial</h2>
     <form>
         <input name="CNPJ" class="form-control mb-2" placeholder="CNPJ" required />
-        <input name="Nome" class="form-control mb-2" placeholder="Nome" required />
-        <input name="NomeFantasia" class="form-control mb-2" placeholder="Nome Fantasia" />
+        <input name="telefone" class="form-control mb-2" placeholder="Telefone" />
         <input name="estado" class="form-control mb-2" placeholder="Estado" />
-        <input name="rua" class="form-control mb-2" placeholder="Rua" />
-        <input name="CEP" class="form-control mb-2" placeholder="CEP" />
-        <input name="numero" class="form-control mb-2" placeholder="Número" />
         <input name="bairro" class="form-control mb-2" placeholder="Bairro" />
-        <input name="chefia" class="form-control mb-2" placeholder="Chefia" />
+        <input name="CEP" class="form-control mb-2" placeholder="CEP" />
+        <input name="rua" class="form-control mb-2" placeholder="Rua" />
+        <input name="numero" class="form-control mb-2" placeholder="Número" />
+        <input name="fk_Cliente_numerocadastro" class="form-control mb-2" placeholder="Número de Cadastro do Cliente Vinculado (1)" />
+        <input name="nome_empresa" class="form-control mb-2" placeholder="Nome da Empresa" />
+        <input name="fk_Cliente_numerocadastro_1" class="form-control mb-2" placeholder="Número de Cadastro do Cliente Vinculado (2)" />
 
-        <button type="submit" class="btn btn-primary mt-2" style="color:black">Cadastrar Empresa</button>
+        <button type="submit" class="btn btn-primary mt-2" style="color:black">Cadastrar Industrial</button>
     </form>
 
-    <h3 class="mt-4">Lista de Empresas</h3>
+    <h3 class="mt-4">Lista de Industriais</h3>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
