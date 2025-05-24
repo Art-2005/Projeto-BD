@@ -26,12 +26,26 @@
     </div>
 </nav>
 
+<!-- Gráfico 1 -->
 <div class="chart-container">
     <h3 class="text-center mb-4">Distribuição de Cadastros</h3>
     <canvas id="cadastrosChart"></canvas>
 </div>
 
+<!-- Gráfico 2 -->
+<div class="chart-container">
+    <h3 class="text-center mb-4">Empresas por Bairro</h3>
+    <canvas id="empresasBairroChart"></canvas>
+</div>
+
+<!-- Gráfico 3 -->
+<div class="chart-container">
+    <h3 class="text-center mb-4">Funcionários por Estado</h3>
+    <canvas id="funcionariosEstadoChart"></canvas>
+</div>
+
 <script>
+    // Gráfico original
     async function fetchCounts() {
         const urls = [
             { label: "Clientes", url: "/clientes" },
@@ -56,21 +70,42 @@
             })
         );
 
-        renderChart(results);
+        renderChart("cadastrosChart", results.map(r => r.label), results.map(r => r.count), "Total de Registros");
     }
 
-    function renderChart(data) {
-        const ctx = document.getElementById("cadastrosChart").getContext("2d");
+    // Empresas por bairro
+    async function fetchEmpresasPorBairro() {
+        try {
+            const res = await fetch("/relatorios/empresas-por-bairro");
+            const data = await res.json();
+            renderChart("empresasBairroChart", data.map(d => d.bairro), data.map(d => d.total_empresas), "Empresas por Bairro");
+        } catch (err) {
+            console.error("Erro ao buscar empresas por bairro:", err);
+        }
+    }
+
+    // Funcionários por estado
+    async function fetchFuncionariosPorEstado() {
+        try {
+            const res = await fetch("/relatorios/funcionarios-por-estado");
+            const data = await res.json();
+            renderChart("funcionariosEstadoChart", data.map(d => d.estado), data.map(d => d.total_funcionarios), "Funcionários por Estado");
+        } catch (err) {
+            console.error("Erro ao buscar funcionários por estado:", err);
+        }
+    }
+
+    // Função genérica para montar gráfico
+    function renderChart(canvasId, labels, valores, titulo) {
+        const ctx = document.getElementById(canvasId).getContext("2d");
         new Chart(ctx, {
             type: "bar",
             data: {
-                labels: data.map(d => d.label),
+                labels,
                 datasets: [{
-                    label: "Total de Registros",
-                    data: data.map(d => d.count),
-                    backgroundColor: [
-                        "#0d6efd", "#198754", "#ffc107", "#dc3545", "#6f42c1", "#0dcaf0", "#fd7e14"
-                    ]
+                    label: titulo,
+                    data: valores,
+                    backgroundColor: "#0d6efd"
                 }]
             },
             options: {
@@ -91,7 +126,10 @@
         });
     }
 
+    // Inicialização
     fetchCounts();
+    fetchEmpresasPorBairro();
+    fetchFuncionariosPorEstado();
 </script>
 </body>
 </html>
