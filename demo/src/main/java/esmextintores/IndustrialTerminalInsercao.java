@@ -1,4 +1,4 @@
-package esmextintores;/*package esmextintores;
+/*package esmextintores;
 
 import esmextintores.model.Industrial;
 import esmextintores.repository.IndustrialRepository;
