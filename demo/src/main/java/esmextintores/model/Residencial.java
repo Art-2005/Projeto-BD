@@ -11,7 +11,7 @@ public class Residencial {
     @Id
     private String cnpj;
 
-    private String nomeResidencial;
+    private String nome_residencial;
     private String telefone;
     private String estado;
     private String bairro;
@@ -22,10 +22,10 @@ public class Residencial {
 
     public Residencial() {}
 
-    public Residencial(String cnpj, String nomeResidencial, String telefone, String estado, String bairro,
+    public Residencial(String cnpj, String nome_residencial, String telefone, String estado, String bairro,
                        String cep, String rua, String numero, String fk_Cliente_numerocadastro) {
         this.cnpj = cnpj;
-        this.nomeResidencial = nomeResidencial;
+        this.nome_residencial = nome_residencial;
         this.telefone = telefone;
         this.estado = estado;
         this.bairro = bairro;
@@ -45,12 +45,12 @@ public class Residencial {
         this.cnpj = cnpj;
     }
 
-    public String getNomeResidencial() {
-        return nomeResidencial;
+    public String getnome_residenciall() {
+        return nome_residencial;
     }
 
-    public void setNomeResidencial(String nomeResidencial) {
-        this.nomeResidencial = nomeResidencial;
+    public void setnome_residencial(String nome_residencial) {
+        this.nome_residencial = nome_residencial;
     }
 
     public String getTelefone() {
