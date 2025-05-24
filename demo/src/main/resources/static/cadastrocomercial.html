@@ -73,6 +73,7 @@
 <body>
 
 <nav class="nav-container d-flex gap-2">
+    <a href="cadastro.html" class="btn btn-dark">Voltar</a>
 </nav>
 
 <div class="form-box">
@@ -80,7 +81,7 @@
     <form id="formComercial">
         <input type="hidden" name="modoEdicao" value="false" />
         <input name="cnpj" class="form-control mb-2" placeholder="CNPJ" required />
-        <input name="nomeEmpresa" class="form-control mb-2" placeholder="Nome da Empresa" required />
+        <input name="nomeEmpresa" class="form-control mb-2" placeholder="Número de Cadastro do Cliente" required />
         <input name="telefone" class="form-control mb-2" placeholder="Telefone" />
         <input name="estado" class="form-control mb-2" placeholder="Estado" />
         <input name="bairro" class="form-control mb-2" placeholder="Bairro" />
@@ -121,7 +122,7 @@
             btnAtualizar.style.display = "none";
             btnCadastrar.style.display = "inline-block";
         } else {
-            alert("Erro ao cadastrar comercial.");
+            alert("Erro ao cadastrar comercial. Verifique se o número de cadastro do cliente é válido.");
         }
     });
 

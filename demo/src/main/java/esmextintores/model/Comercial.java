@@ -11,26 +11,26 @@ public class Comercial {
     @Id
     private String cnpj;
 
-    private String nomeEmpresa;
     private String telefone;
     private String estado;
     private String bairro;
     private String cep;
     private String rua;
     private String numero;
+    private String nomeEmpresa; // ainda referenciando cliente.numerocadastro
 
     public Comercial() {
     }
 
-    public Comercial(String cnpj, String nomeEmpresa, String telefone, String estado, String bairro, String cep, String rua, String numero) {
+    public Comercial(String cnpj, String telefone, String estado, String bairro, String cep, String rua, String numero, String nomeEmpresa) {
         this.cnpj = cnpj;
-        this.nomeEmpresa = nomeEmpresa;
         this.telefone = telefone;
         this.estado = estado;
         this.bairro = bairro;
         this.cep = cep;
         this.rua = rua;
         this.numero = numero;
+        this.nomeEmpresa = nomeEmpresa;
     }
 
     public String getCnpj() {
@@ -39,14 +39,6 @@ public class Comercial {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
-    }
-
-    public String getNomeEmpresa() {
-        return nomeEmpresa;
-    }
-
-    public void setNomeEmpresa(String nomeEmpresa) {
-        this.nomeEmpresa = nomeEmpresa;
     }
 
     public String getTelefone() {
@@ -95,5 +87,13 @@ public class Comercial {
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public String getNomeEmpresa() {
+        return nomeEmpresa;
+    }
+
+    public void setNomeEmpresa(String nomeEmpresa) {
+        this.nomeEmpresa = nomeEmpresa;
     }
 }
