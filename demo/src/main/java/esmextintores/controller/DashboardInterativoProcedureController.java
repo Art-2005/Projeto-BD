@@ -22,8 +22,7 @@ public class DashboardInterativoProcedureController {
     @PostMapping("/dados")
     @ResponseBody
     public Map<String, Double> obterDadosDashboard(@RequestBody Map<String, String> params) {
-        String entidade = params.get("entidade");
         String metrica = params.get("metrica");
-        return dashboardService.obterDados(entidade, metrica);
+        return dashboardService.obterDados(metrica);
     }
 }

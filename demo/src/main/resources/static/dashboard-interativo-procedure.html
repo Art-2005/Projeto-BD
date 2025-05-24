@@ -1,145 +1,85 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Dashboard Interativo</title>
-
-    <!-- CSS personalizado -->
-    <link rel="stylesheet" href="assets/dashboard-interativo-procedure.css">
-
-    <!-- Google Fonts e Font Awesome -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/dashboard-interativo-procedure.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<!-- Botão de toggle da sidebar -->
+
+<!-- Botão de abrir/fechar menu lateral -->
 <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
 
-<!-- Sidebar -->
+<!-- Menu lateral -->
 <nav class="sidebar">
     <h2 class="sidebar-title">Menu</h2>
-    <a href="/" class="topic"><i class="fas fa-house"></i><span class="link-text">Home</span></a>
-    <a href="/empresa/listar" class="topic"><i class="fas fa-building"></i><span class="link-text">Empresas</span></a>
-    <a href="/funcionarios" class="topic"><i class="fas fa-user"></i><span class="link-text">Funcionários</span></a>
-    <a href="/clientes" class="topic"><i class="fas fa-users"></i><span class="link-text">Clientes</span></a>
-    <a href="/dashboard-interativo-procedure.html" class="active"><i class="fas fa-chart-line"></i><span class="link-text">Dashboards</span></a>
+    <a href="index.html" class="topic"><i class="fas fa-home"></i><span class="link-text">Home</span></a>
+    <a href="empresas.html" class="topic"><i class="fas fa-building"></i><span class="link-text">Empresas</span></a>
+    <a href="funcionarios.html" class="topic"><i class="fas fa-user"></i><span class="link-text">Funcionários</span></a>
+    <a href="clientes.html" class="topic"><i class="fas fa-users"></i><span class="link-text">Clientes</span></a>
+    <a href="dashboard-interativo-procedure.html" class="active"><i class="fas fa-chart-line"></i><span class="link-text">Dashboards</span></a>
 </nav>
 
 <!-- Conteúdo principal -->
 <main class="dashboard-content">
-    <div class="grade-graficos">
-        <!-- Gráfico 1 -->
-        <div class="grafico-box">
-            <form class="grafico-form" onsubmit="gerarGrafico(event, 'grafico1')">
-                <label>Entidade:
-                    <select name="entidade">
-                        <option value="empresa">Empresa</option>
-                        <option value="cliente">Cliente</option>
-                        <option value="funcionario">Funcionario</option>
-                    </select>
-                </label>
-                <label>Métrica:
-                    <select name="metrica">
-                        <option value="quantidade">Quantidade</option>
-                        <option value="por_servico">Por Serviço</option>
-                        <option value="media_salario">Média Salarial</option>
-                    </select>
-                </label>
-                <label>Tipo:
-                    <select name="tipo">
-                        <option value="bar">Barra</option>
-                        <option value="pie">Pizza</option>
-                        <option value="line">Linha</option>
-                        <option value="doughnut">Rosquinha</option>
-                    </select>
-                </label>
-                <button type="submit">Gerar</button>
-            </form>
-            <div class="grafico-container">
-                <canvas id="grafico1"></canvas>
+    <h2 class="mb-4">Dashboard Interativo</h2>
+
+    <div class="grafico-box">
+        <form class="grafico-form">
+            <div>
+                <label for="metrica">Métrica:</label>
+                <select id="metrica" name="metrica">
+                    <option value="empresas_bairro">Empresas por Bairro</option>
+                    <option value="salario_bairro">Média Salarial por Bairro</option>
+                    <option value="clientes_servico">Clientes por Serviço</option>
+                    <option value="requisicoes_empresa">Requisições por Empresa</option>
+                    <option value="manutencoes_mes">Manutenções por Mês</option>
+                    <option value="funcionarios_estado">Funcionários por Estado</option>
+                    <option value="residenciais_bairro">Residenciais por Bairro</option>
+                    <option value="valor_total_empresa">Valor Total por Empresa</option>
+                    <option value="total_estabelecimentos">Total por Tipo de Estabelecimento</option>
+                    <option value="clientes_vinculos">Clientes com Mais Vínculos</option>
+                </select>
             </div>
+
+            <div>
+                <label for="tipo">Tipo de Gráfico:</label>
+                <select id="tipo" name="tipo">
+                    <option value="bar">Barra</option>
+                    <option value="line">Linha</option>
+                    <option value="pie">Pizza</option>
+                    <option value="doughnut">Rosquinha</option>
+                </select>
+            </div>
+        </form>
+
+        <div class="grafico-container mt-3">
+            <canvas id="canvas1"></canvas>
         </div>
     </div>
 </main>
 
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<!-- Script principal -->
 <script>
     const charts = {};
-
-    function gerarGrafico(event, canvasId) {
-        event.preventDefault();
-        const form = event.target;
-        const entidade = form.entidade.value;
-        const metrica = form.metrica.value;
-        const tipo = form.tipo.value;
-
-        fetch('/dashboard-interativo-procedure/dados', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ entidade, metrica })
-        })
-            .then(res => res.json())
-            .then(data => {
-                const labels = Object.keys(data);
-                const valores = Object.values(data);
-                const ctx = document.getElementById(canvasId).getContext('2d');
-
-                if (charts[canvasId]) {
-                    charts[canvasId].destroy();
-                }
-
-                charts[canvasId] = new Chart(ctx, {
-                    type: tipo,
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: `${metrica} por ${entidade}`,
-                            data: valores,
-                            backgroundColor: [
-                                'rgba(0, 76, 255, 0.7)',
-                                'rgba(220, 53, 69, 0.7)',
-                                'rgba(0, 24, 81, 0.7)',
-                                'rgba(83, 15, 21, 0.7)',
-                                'rgba(0, 230, 118, 0.7)'
-                            ],
-                            borderColor: 'white',
-                            tension: 0.3
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: { display: true, labels: { color: 'white' } },
-                            tooltip: { mode: 'index', intersect: false }
-                        },
-                        scales: tipo === 'pie' || tipo === 'doughnut' ? {} : {
-                            y: { beginAtZero: true, ticks: { color: 'white' } },
-                            x: { ticks: { color: 'white' } }
-                        }
-                    }
-                });
-            });
-    }
 
     function toggleSidebar() {
         const sidebar = document.querySelector('.sidebar');
         const content = document.querySelector('.dashboard-content');
         const toggleBtn = document.querySelector('.toggle-btn');
-
-        const isCollapsed = sidebar.classList.toggle('collapsed');
+        const collapsed = sidebar.classList.toggle('collapsed');
         content.classList.toggle('collapsed');
-        toggleBtn.style.left = isCollapsed ? '80px' : '280px';
-        localStorage.setItem('sidebar-collapsed', isCollapsed ? 'true' : 'false');
+        toggleBtn.style.left = collapsed ? '80px' : '280px';
+        localStorage.setItem('sidebar-collapsed', collapsed ? 'true' : 'false');
     }
 
     window.addEventListener('DOMContentLoaded', () => {
         const sidebar = document.querySelector('.sidebar');
         const content = document.querySelector('.dashboard-content');
         const toggleBtn = document.querySelector('.toggle-btn');
-
         const collapsed = localStorage.getItem('sidebar-collapsed') === 'true';
 
         if (collapsed) {
@@ -150,56 +90,79 @@
             toggleBtn.style.left = '280px';
         }
 
-        // Gera gráfico inicial com valores default
-        gerarGraficoComParametros('grafico1', 'empresa', 'quantidade', 'bar');
+        // Gera gráfico inicial
+        gerarGraficoComParametros("empresas_bairro", "bar");
+
+        document.getElementById("metrica").addEventListener("change", gerarGrafico);
+        document.getElementById("tipo").addEventListener("change", gerarGrafico);
     });
 
-    function gerarGraficoComParametros(canvasId, entidade, metrica, tipo) {
-        fetch('/dashboard-interativo-procedure/dados', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ entidade, metrica })
+    function gerarGrafico(event) {
+        if (event) event.preventDefault();
+        const metrica = document.getElementById("metrica").value;
+        const tipo = document.getElementById("tipo").value;
+        gerarGraficoComParametros(metrica, tipo);
+    }
+
+    function gerarGraficoComParametros(metrica, tipo) {
+        fetch("/dashboard-interativo-procedure/dados", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ metrica })
         })
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error("Erro ao carregar dados.");
+                return res.json();
+            })
             .then(data => {
                 const labels = Object.keys(data);
                 const valores = Object.values(data);
-                const ctx = document.getElementById(canvasId).getContext('2d');
+                const canvasId = "canvas1";
+                const ctx = document.getElementById(canvasId).getContext("2d");
 
-                if (charts[canvasId]) {
-                    charts[canvasId].destroy();
-                }
+                if (charts[canvasId]) charts[canvasId].destroy();
 
                 charts[canvasId] = new Chart(ctx, {
                     type: tipo,
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: `${metrica} por ${entidade}`,
+                            label: metrica.replace(/_/g, " ").toUpperCase(),
                             data: valores,
                             backgroundColor: [
-                                'rgba(0, 76, 255, 0.7)',
-                                'rgba(220, 53, 69, 0.7)',
-                                'rgba(0, 24, 81, 0.7)',
-                                'rgba(83, 15, 21, 0.7)',
-                                'rgba(0, 230, 118, 0.7)'
+                                '#e53935', '#d32f2f', '#c62828', '#b71c1c',
+                                '#ff5252', '#ff1744', '#f44336', '#ef5350',
+                                '#e57373', '#ffcdd2'
                             ],
-                            borderColor: 'white',
+                            borderWidth: 1,
                             tension: 0.3
                         }]
                     },
                     options: {
                         responsive: true,
                         plugins: {
-                            legend: { display: true, labels: { color: 'white' } },
-                            tooltip: { mode: 'index', intersect: false }
+                            legend: {
+                                labels: { color: 'white' }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false
+                            }
                         },
                         scales: tipo === 'pie' || tipo === 'doughnut' ? {} : {
-                            y: { beginAtZero: true, ticks: { color: 'white' } },
-                            x: { ticks: { color: 'white' } }
+                            y: {
+                                ticks: { color: 'white' },
+                                beginAtZero: true
+                            },
+                            x: {
+                                ticks: { color: 'white' }
+                            }
                         }
                     }
                 });
+            })
+            .catch(err => {
+                alert("Erro ao gerar gráfico: " + err.message);
             });
     }
 </script>

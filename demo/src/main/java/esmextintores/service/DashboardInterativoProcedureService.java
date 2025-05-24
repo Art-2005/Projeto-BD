@@ -16,13 +16,10 @@ public class DashboardInterativoProcedureService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Map<String, Double> obterDados(String entidade, String metrica) {
+    public Map<String, Double> obterDados(String metrica) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("proc_dashboard_esm");
 
-        query.registerStoredProcedureParameter("entidade", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("metrica", String.class, ParameterMode.IN);
-
-        query.setParameter("entidade", entidade);
         query.setParameter("metrica", metrica);
 
         boolean hasResult = query.execute();

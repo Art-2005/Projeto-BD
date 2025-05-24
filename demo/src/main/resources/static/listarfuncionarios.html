@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lista de Funcionários</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #1b1b1b;
+      color: #f0f0f0;
+    }
+
+    .navbar {
+      background-color: #111;
+      padding: 1rem;
+    }
+
+    h2 {
+      color: #ffffff;
+      margin-top: 20px;
+    }
+
+    .card {
+      background-color: #2a2a2a;
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .card input {
+      background-color: #1b1b1b;
+      border: 1px solid #555;
+      color: #fff;
+    }
+
+    .card input:read-only {
+      background-color: #262626;
+    }
+
+    .btn-outline-light {
+      border-color: #f0f0f0;
+      color: #f0f0f0;
+    }
+
+    .btn-outline-light:hover {
+      background-color: #b30000;
+      border-color: #b30000;
+      color: white;
+    }
+
+    .btn-warning {
+      background-color: #ffc107 !important;
+      border: none;
+      color: #000;
+    }
+
+    .btn-warning:hover {
+      background-color: #e0a800 !important;
+    }
+
+    .btn-success {
+      background-color: #28a745 !important;
+      border: none;
+    }
+
+    .btn-success:hover {
+      background-color: #218838 !important;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d !important;
+      border: none;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268 !important;
+    }
+
+    .btn-danger {
+      background-color: #dc3545 !important;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333 !important;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg px-4">
+  <div class="container-fluid justify-content-start gap-2">
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h2>Lista de Funcionários</h2>
+  <div id="listaFuncionarios" class="row g-4"></div>
+</div>
+
+<script>
+  async function carregarFuncionarios() {
+    const response = await fetch("/funcionarios");
+    const funcionarios = await response.json();
+    const lista = document.getElementById("listaFuncionarios");
+    lista.innerHTML = "";
+
+    funcionarios.forEach(func => {
+      const col = document.createElement("div");
+      col.className = "col-md-6 col-lg-4";
+
+      col.innerHTML = `
+        <!-- Substitua o conteúdo do <div class="card p-3"> com este novo bloco: -->
+
+      <div class="card p-3">
+        <form class="d-flex flex-column gap-2" onsubmit="return false;">
+          <input class="form-control form-control-sm" name="cpf" value="${func.cpf}" readonly>
+          <input class="form-control form-control-sm" name="nome" value="${func.nome ?? ''}" readonly>
+          <input class="form-control form-control-sm" name="salario" value="${func.salario ?? ''}" readonly>
+          <input class="form-control form-control-sm" name="estado" value="${func.estado ?? ''}" readonly>
+          <input class="form-control form-control-sm" name="bairro" value="${func.bairro ?? ''}" readonly>
+          <input class="form-control form-control-sm" name="cep" value="${func.cep ?? ''}" readonly>
+          <input class="form-control form-control-sm" name="rua" value="${func.rua ?? ''}" readonly>
+          <input class="form-control form-control-sm" name="numero" value="${func.numero ?? ''}" readonly>
+          <input class="form-control form-control-sm" name="gerencia" value="${func.gerencia ?? ''}" readonly>
+          <input class="form-control form-control-sm" name="chefia" value="${func.chefia ?? ''}" readonly>
+          <input class="form-control form-control-sm" name="cargo" value="${func.cargo ?? ''}" readonly>
+          <input class="form-control form-control-sm" name="email" value="${func.email ?? ''}" readonly>
+          <input class="form-control form-control-sm" name="telefone" value="${func.telefone ?? ''}" readonly>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group btn-group-sm">
+              <button type="button" class="btn btn-warning" onclick="habilitarEdicao(this)">Editar</button>
+              <button type="button" class="btn btn-success d-none" onclick="salvarEdicao(this)">Salvar</button>
+              <button type="button" class="btn btn-secondary d-none" onclick="cancelarEdicao()">Cancelar</button>
+            </div>
+            <button type="button" class="btn btn-sm btn-danger" onclick="deletarFuncionario('${func.cpf}')">Deletar</button>
+          </div>
+        </form>
+      </div>
+
+      `;
+
+      lista.appendChild(col);
+    });
+  }
+
+  function habilitarEdicao(botaoEditar) {
+    const form = botaoEditar.closest("form");
+    const inputs = form.querySelectorAll("input:not([name='cpf'])");
+    inputs.forEach(input => input.readOnly = false);
+    toggleBotoes(form, true);
+  }
+
+  function cancelarEdicao() {
+    carregarFuncionarios();
+  }
+
+  async function salvarEdicao(botaoSalvar) {
+    const form = botaoSalvar.closest("form");
+    const formData = new FormData(form);
+    const funcionario = {};
+    formData.forEach((value, key) => funcionario[key] = value);
+
+    const response = await fetch("/funcionarios", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(funcionario)
+    });
+
+    if (response.ok) {
+      alert("Funcionário atualizado com sucesso!");
+      carregarFuncionarios();
+    } else {
+      alert("Erro ao atualizar funcionário.");
+    }
+  }
+
+  async function deletarFuncionario(cpf) {
+    if (confirm("Deseja realmente deletar este funcionário?")) {
+      const response = await fetch(`/funcionarios/${cpf}`, {
+        method: "DELETE"
+      });
+      if (response.ok) {
+        carregarFuncionarios();
+      } else {
+        alert("Erro ao deletar funcionário.");
+      }
+    }
+  }
+
+  function toggleBotoes(form, modoEdicao) {
+    form.querySelector(".btn-warning").classList.toggle("d-none", modoEdicao);
+    form.querySelector(".btn-success").classList.toggle("d-none", !modoEdicao);
+    form.querySelector(".btn-secondary").classList.toggle("d-none", !modoEdicao);
+  }
+
+  window.onload = carregarFuncionarios;
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

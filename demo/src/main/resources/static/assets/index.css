@@ -1,0 +1,67 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #1b1b1b;
+    color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #121212 !important;
+}
+
+.navbar .btn {
+    font-weight: 500;
+    border-color: #b30000;
+    color: #fff;
+}
+
+.navbar .btn:hover {
+    background-color: #b30000;
+    border-color: #b30000;
+}
+
+.main-content {
+    padding: 40px 20px;
+}
+
+.empresa-logo {
+    max-width: 250px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.welcome-box {
+    background-color: #2a2a2a;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+    color: #f0f0f0;
+}
+
+.welcome-box h1 {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.welcome-box p {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+footer {
+    color: #aaa;
+    font-size: 0.85rem;
+    padding: 20px 0;
+}
+
+@media (max-width: 768px) {
+    .empresa-logo {
+        max-width: 180px;
+    }
+
+    .welcome-box h1 {
+        font-size: 1.5rem;
+    }
+}

@@ -21,7 +21,7 @@ public class Funcionario {
     private String cep;
     private String rua;
     private String numero;
-    private String Gerencia;
+    private String gerencia;
     private String chefia;
 
     public Funcionario() {
@@ -29,7 +29,7 @@ public class Funcionario {
 
     public Funcionario(String cpf, String nome, String cargo, String telefone, String email,
                        Double salario, String estado, String bairro, String cep,
-                       String rua, String numero, String Gerencia, String chefia) {
+                       String rua, String numero, String gerencia, String chefia) {
         this.cpf = cpf;
         this.nome = nome;
         this.cargo = cargo;
@@ -41,7 +41,7 @@ public class Funcionario {
         this.cep = cep;
         this.rua = rua;
         this.numero = numero;
-        this.Gerencia = Gerencia;
+        this.gerencia = gerencia;
         this.chefia = chefia;
     }
 
@@ -136,11 +136,11 @@ public class Funcionario {
     }
 
     public String getGerencia() {
-        return Gerencia;
+        return gerencia;
     }
 
     public void setGerencia(String gerencia) {
-        this.Gerencia = Gerencia;
+        this.gerencia = gerencia;
     }
 
     public String getChefia() {
