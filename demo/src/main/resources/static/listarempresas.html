@@ -120,6 +120,11 @@
             <input class="form-control form-control-sm" name="nomeFantasia" value="${empresa.nomeFantasia ?? ''}" readonly>
             <input class="form-control form-control-sm" name="estado" value="${empresa.estado ?? ''}" readonly>
             <input class="form-control form-control-sm" name="bairro" value="${empresa.bairro ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="rua" value="${empresa.rua ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="cep" value="${empresa.cep ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="numero" value="${empresa.numero ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="chefia" value="${empresa.chefia ?? ''}" readonly>
+
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group btn-group-sm">
                 <button type="button" class="btn btn-warning" onclick="habilitarEdicao(this)">Editar</button>
@@ -144,14 +149,14 @@
   }
 
   function cancelarEdicao() {
-    carregarEmpresas(); // restaura a lista
+    carregarEmpresas();
   }
 
   async function salvarEdicao(botaoSalvar) {
     const form = botaoSalvar.closest("form");
     const formData = new FormData(form);
     const empresa = {};
-    formData.forEach((value, key) => empresa[key] = value);
+    formData.forEach((value, key) => empresa[key] = value.trim());
 
     const response = await fetch("/empresas", {
       method: "POST",

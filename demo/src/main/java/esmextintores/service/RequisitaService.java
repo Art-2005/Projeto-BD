@@ -16,8 +16,6 @@ public class RequisitaService {
     }
 
     public Requisita salvar(Requisita requisita) {
-        System.out.println("Valor: " + requisita.getValor());
-        System.out.println("Data: " + requisita.getData());
         return repository.save(requisita);
     }
 

@@ -2,6 +2,7 @@ package esmextintores.service;
 
 import esmextintores.model.Manutencao;
 import esmextintores.repository.ManutencaoRepository;
+import esmextintores.repository.RequisitaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +11,11 @@ import java.util.List;
 public class ManutencaoService {
 
     private final ManutencaoRepository repository;
+    private final RequisitaRepository requisitaRepository;
 
-    public ManutencaoService(ManutencaoRepository repository) {
+    public ManutencaoService(ManutencaoRepository repository, RequisitaRepository requisitaRepository) {
         this.repository = repository;
+        this.requisitaRepository = requisitaRepository;
     }
 
     public Manutencao salvar(Manutencao manutencao) {
@@ -26,6 +29,8 @@ public class ManutencaoService {
     }
 
     public void deletar(String numeroregistro) {
+        System.out.println("Tentando deletar: " + numeroregistro);
         repository.deleteById(numeroregistro);
     }
 }
+

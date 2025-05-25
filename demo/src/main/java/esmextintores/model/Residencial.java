@@ -45,11 +45,11 @@ public class Residencial {
         this.cnpj = cnpj;
     }
 
-    public String getnome_residenciall() {
+    public String getNome_residencial() {
         return nome_residencial;
     }
 
-    public void setnome_residencial(String nome_residencial) {
+    public void setNome_residencial(String nome_residencial) {
         this.nome_residencial = nome_residencial;
     }
 

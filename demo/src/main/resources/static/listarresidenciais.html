@@ -1,10 +1,11 @@
+<!-- listarresidenciais.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
     <title>Lista de Residenciais</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
     <style>
         body {
@@ -12,54 +13,41 @@
             background-color: #1b1b1b;
             color: #f0f0f0;
         }
-
-        .list-group-item {
+        .card {
             background-color: #2a2a2a;
             border: none;
-            color: #f0f0f0;
-            border-radius: 6px;
-            margin-bottom: 8px;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
         }
-
-        .btn-outline-light:hover {
-            background-color: #b30000;
-            border-color: #b30000;
-            color: white;
+        .card input {
+            background-color: #1b1b1b;
+            border: 1px solid #555;
+            color: #fff;
         }
-
+        .card input:read-only {
+            background-color: #262626;
+        }
         .btn-warning {
             background-color: #ffc107 !important;
-            border: none;
             color: #000;
         }
-
+        .btn-success {
+            background-color: #28a745 !important;
+        }
+        .btn-secondary {
+            background-color: #6c757d !important;
+        }
         .btn-danger {
             background-color: #dc3545 !important;
-            border: none;
-        }
-
-        .btn-dark {
-            background-color: #b30000 !important;
-            border: none;
-        }
-
-        .btn-dark:hover {
-            background-color: #ff1a1a !important;
-        }
-
-        nav {
-            background-color: transparent !important;
         }
     </style>
 </head>
 <body>
 
-<nav class="px-4 mt-2 d-flex gap-2">
-</nav>
-
 <div class="container mt-4">
     <h2>Lista de Residenciais</h2>
-    <ul id="listaResidenciais" class="list-group mt-3"></ul>
+    <div id="listaResidenciais" class="row g-4"></div>
 </div>
 
 <script>
@@ -69,23 +57,65 @@
         const lista = document.getElementById("listaResidenciais");
         lista.innerHTML = "";
 
-        residenciais.forEach(r => {
-            const li = document.createElement("li");
-            li.className = "list-group-item d-flex justify-content-between align-items-center";
-            li.innerHTML = `
-        ${r.nomeResidencial ?? "Sem nome"} (${r.cnpj}) - ${r.estado ?? ""}
-        <div>
-          <button class="btn btn-sm btn-warning me-1" onclick='editarResidencial(${JSON.stringify(r)})'>Editar</button>
-          <button class="btn btn-sm btn-danger" onclick="deletarResidencial('${r.cnpj}')">Deletar</button>
+        residenciais.forEach(res => {
+            const col = document.createElement("div");
+            col.className = "col-md-6 col-lg-4";
+
+            col.innerHTML = `
+        <div class="card">
+          <form class="d-flex flex-column gap-2" onsubmit="return false;">
+            <input class="form-control form-control-sm" name="cnpj" value="${res.cnpj}" readonly>
+            <input class="form-control form-control-sm" name="nome_residencial" value="${res.nome_residencial ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="telefone" value="${res.telefone ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="estado" value="${res.estado ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="bairro" value="${res.bairro ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="cep" value="${res.cep ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="rua" value="${res.rua ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="numero" value="${res.numero ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="fk_Cliente_numerocadastro" value="${res.fk_Cliente_numerocadastro ?? ''}" readonly>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-warning" onclick="habilitarEdicao(this)">Editar</button>
+                <button type="button" class="btn btn-success d-none" onclick="salvarEdicao(this)">Salvar</button>
+                <button type="button" class="btn btn-secondary d-none" onclick="cancelarEdicao()">Cancelar</button>
+              </div>
+              <button type="button" class="btn btn-sm btn-danger" onclick="deletarResidencial('${res.cnpj}')">Deletar</button>
+            </div>
+          </form>
         </div>
       `;
-            lista.appendChild(li);
+            lista.appendChild(col);
         });
     }
 
-    function editarResidencial(r) {
-        const params = new URLSearchParams(r).toString();
-        window.location.href = `cadastroresidencial.html?${params}`;
+    function habilitarEdicao(botaoEditar) {
+        const form = botaoEditar.closest("form");
+        form.querySelectorAll("input:not([name='cnpj'])").forEach(input => input.readOnly = false);
+        toggleBotoes(form, true);
+    }
+
+    function cancelarEdicao() {
+        carregarResidenciais();
+    }
+
+    async function salvarEdicao(botaoSalvar) {
+        const form = botaoSalvar.closest("form");
+        const formData = new FormData(form);
+        const residencial = {};
+        formData.forEach((v, k) => residencial[k] = v);
+
+        const response = await fetch("/residenciais", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(residencial)
+        });
+
+        if (response.ok) {
+            alert("Residencial atualizado com sucesso!");
+            carregarResidenciais();
+        } else {
+            alert("Erro ao atualizar.");
+        }
     }
 
     async function deletarResidencial(cnpj) {
@@ -96,9 +126,15 @@
             if (response.ok) {
                 carregarResidenciais();
             } else {
-                alert("Erro ao deletar residencial.");
+                alert("Erro ao deletar.");
             }
         }
+    }
+
+    function toggleBotoes(form, modoEdicao) {
+        form.querySelector(".btn-warning").classList.toggle("d-none", modoEdicao);
+        form.querySelector(".btn-success").classList.toggle("d-none", !modoEdicao);
+        form.querySelector(".btn-secondary").classList.toggle("d-none", !modoEdicao);
     }
 
     window.onload = carregarResidenciais;

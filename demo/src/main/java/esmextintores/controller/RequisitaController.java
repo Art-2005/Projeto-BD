@@ -18,9 +18,8 @@ public class RequisitaController {
     }
 
     @PostMapping
-    public ResponseEntity<Requisita> criar(@RequestBody Requisita requisita) {
-        Requisita salva = service.salvar(requisita);
-        return ResponseEntity.ok(salva);
+    public ResponseEntity<Requisita> salvar(@RequestBody Requisita requisita) {
+        return ResponseEntity.ok(service.salvar(requisita));
     }
 
     @GetMapping
@@ -28,8 +27,8 @@ public class RequisitaController {
         return ResponseEntity.ok(service.listarTodas());
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deletar(@RequestParam String id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable String id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }

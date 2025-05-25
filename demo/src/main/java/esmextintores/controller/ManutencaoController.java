@@ -30,7 +30,13 @@ public class ManutencaoController {
 
     @DeleteMapping("/{numeroregistro}")
     public ResponseEntity<Void> deletar(@PathVariable String numeroregistro) {
-        service.deletar(numeroregistro);
-        return ResponseEntity.noContent().build();
+        try {
+            service.deletar(numeroregistro);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            e.printStackTrace(); // LOG NO CONSOLE
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }
+

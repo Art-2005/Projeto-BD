@@ -72,7 +72,7 @@
     <form id="formResidencial">
         <input type="hidden" name="modoEdicao" value="false" />
         <input name="cnpj" class="form-control mb-2" placeholder="CNPJ" required />
-        <input name="nomeResidencial" class="form-control mb-2" placeholder="Nome Residencial" required />
+        <input name="nome_residencial" class="form-control mb-2" placeholder="Nome Residencial" required />
         <input name="telefone" class="form-control mb-2" placeholder="Telefone" />
         <input name="estado" class="form-control mb-2" placeholder="Estado" />
         <input name="bairro" class="form-control mb-2" placeholder="Bairro" />
@@ -118,7 +118,7 @@
         }
     });
 
-    // Preencher automaticamente com base na URL (se houver)
+    // Preencher automaticamente com base na URL (modo edição)
     window.onload = function () {
         const params = new URLSearchParams(window.location.search);
         if (params.has("cnpj")) {

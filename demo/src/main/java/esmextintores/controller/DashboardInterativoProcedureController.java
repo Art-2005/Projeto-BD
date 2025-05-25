@@ -16,7 +16,7 @@ public class DashboardInterativoProcedureController {
 
     @GetMapping
     public String exibirDashboard() {
-        return "dashboard-interativo-procedure"; // HTML na pasta templates
+        return "dashboard-interativo-procedure"; // Nome da página HTML em src/main/resources/templates
     }
 
     @PostMapping("/dados")

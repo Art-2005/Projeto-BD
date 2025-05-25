@@ -1,66 +1,58 @@
 package esmextintores.model;
 
-import jakarta.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDate;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-@IdClass(Requisita.class)
 @Table(name = "requisita")
 public class Requisita {
-
     @Id
-    @ManyToOne
-    @JoinColumn(name = "manutencao_numeroregistro", referencedColumnName = "numeroregistro")
-    private Manutencao manutencao;
+    private String id;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "empresa_cnpj", referencedColumnName = "cnpj")
-    private Empresa empresa;
+    private String data;
+    private String valor;
+    private String fk_Empresa_CNPJ;
+    private String fk_Manutencao_numeroregistro;
 
-    private Double valor;
-    private LocalDate data;
-
-    public Requisita() {
+    // Getters e Setters
+    public String getId() {
+        return id;
     }
 
-    public Requisita(Manutencao manutencao, Empresa empresa, Double valor, LocalDate data) {
-        this.manutencao = manutencao;
-        this.empresa = empresa;
-        this.valor = valor;
-        this.data = data;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Manutencao getManutencao() {
-        return manutencao;
-    }
-
-    public void setManutencao(Manutencao manutencao) {
-        this.manutencao = manutencao;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
-    public Double getValor() {
-        return valor;
-    }
-
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
-
-    public LocalDate getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(String data) {
         this.data = data;
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+
+    public String getFk_Empresa_CNPJ() {
+        return fk_Empresa_CNPJ;
+    }
+
+    public void setFk_Empresa_CNPJ(String fk_Empresa_CNPJ) {
+        this.fk_Empresa_CNPJ = fk_Empresa_CNPJ;
+    }
+
+    public String getFk_Manutencao_numeroregistro() {
+        return fk_Manutencao_numeroregistro;
+    }
+
+    public void setFk_Manutencao_numeroregistro(String fk_Manutencao_numeroregistro) {
+        this.fk_Manutencao_numeroregistro = fk_Manutencao_numeroregistro;
     }
 }

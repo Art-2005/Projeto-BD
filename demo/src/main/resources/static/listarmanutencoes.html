@@ -13,20 +13,32 @@
       color: #f0f0f0;
     }
 
+    .navbar {
+      background-color: #111;
+      padding: 1rem;
+    }
+
+    h2 {
+      color: #ffffff;
+      margin-top: 20px;
+    }
+
     .card {
       background-color: #2a2a2a;
       border: none;
       border-radius: 12px;
       color: #fff;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
-      margin-bottom: 1rem;
-      padding: 1rem;
     }
 
-    .btn-outline-light:hover {
-      background-color: #b30000;
-      border-color: #b30000;
-      color: white;
+    .card input {
+      background-color: #1b1b1b;
+      border: 1px solid #555;
+      color: #fff;
+    }
+
+    .card input:read-only {
+      background-color: #262626;
     }
 
     .btn-warning {
@@ -35,31 +47,31 @@
       color: #000;
     }
 
+    .btn-success {
+      background-color: #28a745 !important;
+      border: none;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d !important;
+      border: none;
+    }
+
     .btn-danger {
       background-color: #dc3545 !important;
       border: none;
-    }
-
-    .btn-dark {
-      background-color: #b30000 !important;
-      border: none;
-    }
-
-    .btn-dark:hover {
-      background-color: #ff1a1a !important;
     }
   </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg px-4 mt-2">
-  <div class="container-fluid justify-content-start gap-2">
-  </div>
+<nav class="navbar navbar-expand-lg px-4">
+  <div class="container-fluid justify-content-start gap-2"></div>
 </nav>
 
 <div class="container mt-4">
   <h2>Lista de Manutenções</h2>
-  <ul id="listaManutencoes" class="list-group mt-3"></ul>
+  <div id="listaManutencoes" class="row g-4"></div>
 </div>
 
 <script>
@@ -69,33 +81,82 @@
     const lista = document.getElementById("listaManutencoes");
     lista.innerHTML = "";
 
-    manutencoes.forEach(m => {
-      const li = document.createElement("li");
-      li.className = "list-group-item bg-dark text-light d-flex justify-content-between align-items-center";
-      li.innerHTML = `
-        ${m.data} - Registro ${m.numeroregistro}
-        <div>
-          <button class="btn btn-sm btn-warning me-1" onclick='editarManutencao(${JSON.stringify(m)})'>Editar</button>
-          <button class="btn btn-sm btn-danger" onclick="deletarManutencao('${m.numeroregistro}')">Deletar</button>
+    manutencoes.forEach(manutencao => {
+      const col = document.createElement("div");
+      col.className = "col-md-6 col-lg-4";
+
+      const registro = encodeURIComponent(manutencao.numeroregistro);
+
+      col.innerHTML = `
+        <div class="card p-3">
+          <form class="d-flex flex-column gap-2" onsubmit="return false;">
+            <input class="form-control form-control-sm" name="numeroregistro" value="${manutencao.numeroregistro}" readonly>
+            <input class="form-control form-control-sm" name="data" value="${manutencao.data}" readonly>
+            <input class="form-control form-control-sm" name="historico" value="${manutencao.historico ?? ''}" readonly>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-warning" onclick="habilitarEdicao(this)">Editar</button>
+                <button type="button" class="btn btn-success d-none" onclick="salvarEdicao(this)">Salvar</button>
+                <button type="button" class="btn btn-secondary d-none" onclick="cancelarEdicao()">Cancelar</button>
+              </div>
+              <button type="button" class="btn btn-sm btn-danger" data-id="${registro}" onclick="deletarManutencao(this.getAttribute('data-id'))">Deletar</button>
+            </div>
+          </form>
         </div>
       `;
-      lista.appendChild(li);
+
+      lista.appendChild(col);
     });
   }
 
-  function editarManutencao(m) {
-    window.location.href = `cadastromanutencao.html?data=${m.data}&numeroregistro=${m.numeroregistro}&historico=${encodeURIComponent(m.historico ?? '')}`;
+  function habilitarEdicao(botaoEditar) {
+    const form = botaoEditar.closest("form");
+    const inputs = form.querySelectorAll("input:not([name='numeroregistro'])");
+    inputs.forEach(input => input.readOnly = false);
+    toggleBotoes(form, true);
+  }
+
+  function cancelarEdicao() {
+    carregarManutencoes();
+  }
+
+  async function salvarEdicao(botaoSalvar) {
+    const form = botaoSalvar.closest("form");
+    const formData = new FormData(form);
+    const manutencao = {};
+    formData.forEach((value, key) => manutencao[key] = value);
+
+    const response = await fetch("/manutencoes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(manutencao)
+    });
+
+    if (response.ok) {
+      alert("Manutenção atualizada com sucesso!");
+      carregarManutencoes();
+    } else {
+      alert("Erro ao atualizar manutenção.");
+    }
   }
 
   async function deletarManutencao(numeroregistro) {
     if (confirm("Deseja realmente deletar esta manutenção?")) {
-      const response = await fetch(`/manutencoes/${numeroregistro}`, { method: "DELETE" });
+      const response = await fetch(`/manutencoes/${numeroregistro}`, {
+        method: "DELETE"
+      });
       if (response.ok) {
         carregarManutencoes();
       } else {
         alert("Erro ao deletar manutenção.");
       }
     }
+  }
+
+  function toggleBotoes(form, modoEdicao) {
+    form.querySelector(".btn-warning").classList.toggle("d-none", modoEdicao);
+    form.querySelector(".btn-success").classList.toggle("d-none", !modoEdicao);
+    form.querySelector(".btn-secondary").classList.toggle("d-none", !modoEdicao);
   }
 
   window.onload = carregarManutencoes;
