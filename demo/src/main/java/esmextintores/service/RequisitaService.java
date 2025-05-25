@@ -1,6 +1,7 @@
 package esmextintores.service;
 
 import esmextintores.model.Requisita;
+import esmextintores.model.RequisitaId;
 import esmextintores.repository.RequisitaRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +20,11 @@ public class RequisitaService {
         return repository.save(requisita);
     }
 
-    public List<Requisita> listarTodas() {
+    public List<Requisita> listarTodos() {
         return repository.findAll();
     }
 
-    public void deletar(String id) {
+    public void deletar(RequisitaId id) {
         repository.deleteById(id);
     }
 }

@@ -1,4 +1,3 @@
-<!-- listarrequisicoes.html ajustado com validacao e alertas -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -37,100 +36,105 @@
 </div>
 
 <script>
-    async function carregarRequisicoes() {
-        const response = await fetch("/requisicoes");
-        const requisicoes = await response.json();
-        const lista = document.getElementById("listaRequisicoes");
-        lista.innerHTML = "";
+async function carregarRequisicoes() {
+    const response = await fetch("/requisicoes");
+    const requisicoes = await response.json();
+    const lista = document.getElementById("listaRequisicoes");
+    lista.innerHTML = "";
 
-        requisicoes.forEach(r => {
-            const col = document.createElement("div");
-            col.className = "col-md-6 col-lg-4";
+    requisicoes.forEach(r => {
+        const col = document.createElement("div");
+        col.className = "col-md-6";
 
-            col.innerHTML = `
+        col.innerHTML = `
         <div class="card">
           <form class="d-flex flex-column gap-2" onsubmit="return false;">
-            <input class="form-control" name="id" value="${r.id}" readonly>
+            <input class="form-control" name="fk_Empresa_CNPJ" value="${r.id.fk_Empresa_CNPJ}" readonly>
+            <input class="form-control" name="fk_Manutencao_numeroregistro" value="${r.id.fk_Manutencao_numeroregistro}" readonly>
             <input class="form-control" name="data" value="${r.data ?? ''}" readonly>
             <input class="form-control" name="valor" value="${r.valor ?? ''}" readonly>
-            <input class="form-control" name="fk_Empresa_CNPJ" value="${r.fk_Empresa_CNPJ ?? ''}" readonly>
-            <input class="form-control" name="fk_Manutencao_numeroregistro" value="${r.fk_Manutencao_numeroregistro ?? ''}" readonly>
 
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between">
               <div class="btn-group btn-group-sm">
                 <button type="button" class="btn btn-warning" onclick="habilitarEdicao(this)">Editar</button>
                 <button type="button" class="btn btn-success d-none" onclick="salvarEdicao(this)">Salvar</button>
                 <button type="button" class="btn btn-secondary d-none" onclick="cancelarEdicao()">Cancelar</button>
               </div>
-              <button type="button" class="btn btn-sm btn-danger" onclick="deletarRequisicao('${r.id}')">Deletar</button>
+              <button type="button" class="btn btn-danger btn-sm" onclick="deletarRequisicao('${r.id.fk_Empresa_CNPJ}', '${r.id.fk_Manutencao_numeroregistro}')">Deletar</button>
             </div>
           </form>
         </div>
-      `;
+        `;
 
-            lista.appendChild(col);
+        lista.appendChild(col);
+    });
+}
+
+function habilitarEdicao(botaoEditar) {
+    const form = botaoEditar.closest("form");
+    form.querySelectorAll("input[name='data'], input[name='valor']").forEach(input => input.readOnly = false);
+    toggleBotoes(form, true);
+}
+
+function cancelarEdicao() {
+    carregarRequisicoes();
+}
+
+async function salvarEdicao(botaoSalvar) {
+    const form = botaoSalvar.closest("form");
+    const data = form.elements["data"].value.trim();
+    const valor = form.elements["valor"].value.trim();
+    const fk_Empresa_CNPJ = form.elements["fk_Empresa_CNPJ"].value.trim();
+    const fk_Manutencao_numeroregistro = form.elements["fk_Manutencao_numeroregistro"].value.trim();
+
+    if (!data || !valor || !fk_Empresa_CNPJ || !fk_Manutencao_numeroregistro) {
+        alert("Todos os campos são obrigatórios.");
+        return;
+    }
+
+    const requisita = {
+        id: {
+            fk_Empresa_CNPJ,
+            fk_Manutencao_numeroregistro
+        },
+        data,
+        valor
+    };
+
+    try {
+        const response = await fetch("/requisicoes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requisita)
         });
-    }
 
-    function habilitarEdicao(botaoEditar) {
-        const form = botaoEditar.closest("form");
-        const inputs = form.querySelectorAll("input:not([name='id'])");
-        inputs.forEach(input => input.readOnly = false);
-        toggleBotoes(form, true);
-    }
+        if (!response.ok) throw new Error(await response.text());
 
-    function cancelarEdicao() {
+        alert("Requisição atualizada com sucesso!");
         carregarRequisicoes();
+    } catch (err) {
+        alert("Erro ao atualizar requisição:\n" + err.message);
     }
+}
 
-    async function salvarEdicao(botaoSalvar) {
-        const form = botaoSalvar.closest("form");
-        const formData = new FormData(form);
-        const requisita = {};
-        formData.forEach((value, key) => requisita[key] = value.trim());
-
-        if (!requisita.id || !requisita.data || !requisita.valor || !requisita.fk_Empresa_CNPJ || !requisita.fk_Manutencao_numeroregistro) {
-            alert("Todos os campos são obrigatórios.");
-            return;
-        }
-
-        try {
-            const response = await fetch("/requisicoes", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(requisita)
-            });
-
-            if (!response.ok) {
-                const erro = await response.text();
-                throw new Error(erro);
-            }
-
-            alert("Requisição atualizada com sucesso!");
+async function deletarRequisicao(cnpj, numero) {
+    if (confirm("Deseja realmente deletar esta requisição?")) {
+        const response = await fetch(`/requisicoes?fk_Empresa_CNPJ=${cnpj}&fk_Manutencao_numeroregistro=${numero}`, { method: "DELETE" });
+        if (response.ok) {
             carregarRequisicoes();
-        } catch (err) {
-            alert("Erro ao atualizar requisição:\nVerifique se a empresa e a manutenção existem.");
+        } else {
+            alert("Erro ao deletar.");
         }
     }
+}
 
-    async function deletarRequisicao(id) {
-        if (confirm("Deseja realmente deletar esta requisição?")) {
-            const response = await fetch(`/requisicoes/${id}`, { method: "DELETE" });
-            if (response.ok) {
-                carregarRequisicoes();
-            } else {
-                alert("Erro ao deletar.");
-            }
-        }
-    }
+function toggleBotoes(form, modoEdicao) {
+    form.querySelector(".btn-warning").classList.toggle("d-none", modoEdicao);
+    form.querySelector(".btn-success").classList.toggle("d-none", !modoEdicao);
+    form.querySelector(".btn-secondary").classList.toggle("d-none", !modoEdicao);
+}
 
-    function toggleBotoes(form, modoEdicao) {
-        form.querySelector(".btn-warning").classList.toggle("d-none", modoEdicao);
-        form.querySelector(".btn-success").classList.toggle("d-none", !modoEdicao);
-        form.querySelector(".btn-secondary").classList.toggle("d-none", !modoEdicao);
-    }
-
-    window.onload = carregarRequisicoes;
+window.onload = carregarRequisicoes;
 </script>
 </body>
 </html>

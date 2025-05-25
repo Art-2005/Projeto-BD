@@ -1,6 +1,7 @@
 package esmextintores.controller;
 
 import esmextintores.model.Requisita;
+import esmextintores.model.RequisitaId;
 import esmextintores.service.RequisitaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +25,13 @@ public class RequisitaController {
 
     @GetMapping
     public ResponseEntity<List<Requisita>> listar() {
-        return ResponseEntity.ok(service.listarTodas());
+        return ResponseEntity.ok(service.listarTodos());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable String id) {
+    @DeleteMapping
+    public ResponseEntity<Void> deletar(@RequestParam String fk_Empresa_CNPJ,
+                                        @RequestParam String fk_Manutencao_numeroregistro) {
+        RequisitaId id = new RequisitaId(fk_Empresa_CNPJ, fk_Manutencao_numeroregistro);
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
