@@ -6,67 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="15f6a4a9-87d5-43ce-aa3d-59c5582325a7" name="Changes" comment="front end">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/esmextintores/model/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/esmextintores/model/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/esmextintores/model/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/esmextintores/model/Empresa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-grid.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-grid.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-grid.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-grid.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-grid.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-grid.rtl.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-grid.rtl.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-grid.rtl.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-reboot.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-reboot.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-reboot.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-reboot.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-reboot.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-reboot.rtl.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-reboot.rtl.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-reboot.rtl.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-utilities.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-utilities.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-utilities.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-utilities.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-utilities.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-utilities.rtl.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-utilities.rtl.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap-utilities.rtl.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap.rtl.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap.rtl.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/css/bootstrap.rtl.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.bundle.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.esm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.esm.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.esm.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.esm.min.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/bootstrap-5.3.6-dist/js/bootstrap.min.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/cadastro.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/cadastrobalcao.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/cadastrocliente.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/cadastrocomercial.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/cadastroempresa.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/cadastrofuncionario.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/cadastroindustrial.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/cadastromanutencao.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/cadastroresidencial.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/front-end.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/images/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/static/listarbalcoes.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/static/listarbalcoes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/static/listarindustriais.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/static/listarindustriais.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,43 +50,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JUnit.EsmExtintoresApplicationTests.executor": "Run",
-    "JavaScript Debug.cadastro.html.executor": "Run",
-    "JavaScript Debug.index.html (1).executor": "Run",
-    "JavaScript Debug.index.html (2).executor": "Run",
-    "JavaScript Debug.index.html (3).executor": "Run",
-    "JavaScript Debug.index.html (4).executor": "Run",
-    "JavaScript Debug.index.html.executor": "Run",
-    "Node.js.App.jsx.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.EsmExtintoresApplication (1).executor": "Run",
-    "Spring Boot.EsmExtintoresApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/artur/OneDrive/Documentos/GitHub/Projeto-BD/front-end",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/artur/OneDrive/Documentos/GitHub/Projeto-BD/untitled/src/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.EsmExtintoresApplicationTests.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.cadastro.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.index.html (1).executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.index.html (2).executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.index.html (3).executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.index.html (4).executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.App.jsx.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.EsmExtintoresApplication (1).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.EsmExtintoresApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/artur/OneDrive/Documentos/GitHub/Projeto-BD/front-end&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/artur/OneDrive/Documentos/GitHub/Projeto-BD/untitled/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="EsmExtintoresApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="demo" />
@@ -244,6 +185,7 @@
       <workItem from="1747939707150" duration="1560000" />
       <workItem from="1747943081858" duration="10789000" />
       <workItem from="1747958291953" duration="6911000" />
+      <workItem from="1748162979383" duration="2702000" />
     </task>
     <task id="LOCAL-00001" summary="🕊️">
       <option name="closed" value="true" />

@@ -116,10 +116,15 @@
       col.innerHTML = `
         <div class="card p-3">
           <form class="d-flex flex-column gap-2" onsubmit="return false;">
-            <input class="form-control form-control-sm" name="cnpj" value="${balcao.cnpj}" readonly>
-            <input class="form-control form-control-sm" name="estado" value="${balcao.estado ?? ''}" readonly>
-            <input class="form-control form-control-sm" name="telefone" value="${balcao.telefone ?? ''}" readonly>
-            <input class="form-control form-control-sm" name="bairro" value="${balcao.bairro ?? ''}" readonly>
+<input class="form-control form-control-sm" name="cnpj" value="${balcao.cnpj}" readonly>
+<input class="form-control form-control-sm" name="estado" value="${balcao.estado ?? ''}" readonly>
+<input class="form-control form-control-sm" name="telefone" value="${balcao.telefone ?? ''}" readonly>
+<input class="form-control form-control-sm" name="bairro" value="${balcao.bairro ?? ''}" readonly>
+<input class="form-control form-control-sm" name="cep" value="${balcao.cep ?? ''}" readonly>
+<input class="form-control form-control-sm" name="rua" value="${balcao.rua ?? ''}" readonly>
+<input class="form-control form-control-sm" name="numero" value="${balcao.numero ?? ''}" readonly>
+<input class="form-control form-control-sm" name="fk_Cliente_numerocadastro" value="${balcao.fk_Cliente_numerocadastro ?? ''}" readonly>
+
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group btn-group-sm">
                 <button type="button" class="btn btn-warning" onclick="habilitarEdicao(this)">Editar</button>

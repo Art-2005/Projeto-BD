@@ -13,12 +13,22 @@
       color: #f0f0f0;
     }
 
-    .list-group-item {
+    .card {
       background-color: #2a2a2a;
       border: none;
-      color: #f0f0f0;
-      margin-bottom: 8px;
-      border-radius: 6px;
+      border-radius: 12px;
+      color: #fff;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .card input {
+      background-color: #1b1b1b;
+      border: 1px solid #555;
+      color: #fff;
+    }
+
+    .card input:read-only {
+      background-color: #262626;
     }
 
     .btn-warning {
@@ -27,31 +37,35 @@
       color: #000;
     }
 
+    .btn-success {
+      background-color: #28a745 !important;
+      border: none;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d !important;
+      border: none;
+    }
+
     .btn-danger {
       background-color: #dc3545 !important;
       border: none;
     }
 
-    .btn-dark {
-      background-color: #b30000 !important;
-      border: none;
-    }
-
-    .btn-dark:hover {
-      background-color: #ff1a1a !important;
+    .container h2 {
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg px-4 mt-2">
-  <div class="container-fluid justify-content-start gap-2">
-  </div>
+  <div class="container-fluid justify-content-start gap-2"></div>
 </nav>
 
 <div class="container mt-4">
   <h2>Lista de Industriais</h2>
-  <ul id="listaIndustriais" class="list-group mt-3"></ul>
+  <div id="listaIndustriais" class="row g-4"></div>
 </div>
 
 <script>
@@ -62,22 +76,66 @@
     lista.innerHTML = "";
 
     industriais.forEach(i => {
-      const li = document.createElement("li");
-      li.className = "list-group-item d-flex justify-content-between align-items-center";
-      li.innerHTML = `
-        ${i.nomeEmpresa ?? "Sem nome"} (${i.cnpj}) - ${i.estado ?? ""}
-        <div>
-          <button class="btn btn-sm btn-warning me-1" onclick='editarIndustrial(${JSON.stringify(i)})'>Editar</button>
-          <button class="btn btn-sm btn-danger" onclick="deletarIndustrial('${i.cnpj}')">Deletar</button>
+      const col = document.createElement("div");
+      col.className = "col-md-6 col-lg-4";
+
+      col.innerHTML = `
+        <div class="card p-3">
+          <form class="d-flex flex-column gap-2" onsubmit="return false;">
+            <input class="form-control form-control-sm" name="cnpj" value="${i.cnpj}" readonly>
+            <input class="form-control form-control-sm" name="nomeEmpresa" value="${i.nomeEmpresa ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="telefone" value="${i.telefone ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="estado" value="${i.estado ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="bairro" value="${i.bairro ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="cep" value="${i.cep ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="rua" value="${i.rua ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="numero" value="${i.numero ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="fk_Cliente_numerocadastro" value="${i.fk_Cliente_numerocadastro ?? ''}" readonly>
+            <input class="form-control form-control-sm" name="fk_Cliente_numerocadastro_1" value="${i.fk_Cliente_numerocadastro_1 ?? ''}" readonly>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-warning" onclick="habilitarEdicao(this)">Editar</button>
+                <button type="button" class="btn btn-success d-none" onclick="salvarEdicao(this)">Salvar</button>
+                <button type="button" class="btn btn-secondary d-none" onclick="cancelarEdicao()">Cancelar</button>
+              </div>
+              <button type="button" class="btn btn-sm btn-danger" onclick="deletarIndustrial('${i.cnpj}')">Deletar</button>
+            </div>
+          </form>
         </div>
       `;
-      lista.appendChild(li);
+      lista.appendChild(col);
     });
   }
 
-  function editarIndustrial(i) {
-    const params = new URLSearchParams(i).toString();
-    window.location.href = `cadastroindustrial.html?${params}`;
+  function habilitarEdicao(botaoEditar) {
+    const form = botaoEditar.closest("form");
+    const inputs = form.querySelectorAll("input:not([name='cnpj'])");
+    inputs.forEach(input => input.readOnly = false);
+    toggleBotoes(form, true);
+  }
+
+  function cancelarEdicao() {
+    carregarIndustriais();
+  }
+
+  async function salvarEdicao(botaoSalvar) {
+    const form = botaoSalvar.closest("form");
+    const formData = new FormData(form);
+    const industrial = {};
+    formData.forEach((value, key) => industrial[key] = value);
+
+    const response = await fetch("/industriais", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(industrial)
+    });
+
+    if (response.ok) {
+      alert("Industrial atualizado com sucesso!");
+      carregarIndustriais();
+    } else {
+      alert("Erro ao atualizar industrial.");
+    }
   }
 
   async function deletarIndustrial(cnpj) {
@@ -93,8 +151,15 @@
     }
   }
 
+  function toggleBotoes(form, modoEdicao) {
+    form.querySelector(".btn-warning").classList.toggle("d-none", modoEdicao);
+    form.querySelector(".btn-success").classList.toggle("d-none", !modoEdicao);
+    form.querySelector(".btn-secondary").classList.toggle("d-none", !modoEdicao);
+  }
+
   window.onload = carregarIndustriais;
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
