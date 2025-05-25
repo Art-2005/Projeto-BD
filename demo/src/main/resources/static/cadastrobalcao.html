@@ -82,7 +82,6 @@
 <body>
 
 <nav class="nav-container d-flex gap-2">
-    <a href="cadastro.html" class="btn btn-dark">Voltar</a>
 </nav>
 
 <div class="form-box">
@@ -96,7 +95,7 @@
         <input name="cep" class="form-control mb-2" placeholder="CEP" />
         <input name="rua" class="form-control mb-2" placeholder="Rua" />
         <input name="numero" class="form-control mb-2" placeholder="Número" />
-        <input name="fk_Cliente_numerocadastro" class="form-control mb-2" placeholder="Número do Cliente Vinculado" />
+        <input name="fk_Cliente_numerocadastro" class="form-control mb-2" placeholder="Número do Cliente Vinculado" required />
         <div class="d-flex gap-2">
             <button type="submit" id="btnCadastrar" class="btn btn-success">Cadastrar Balcão</button>
             <button type="button" id="btnAtualizar" class="btn btn-warning" style="display: none;">Atualizar Balcão</button>

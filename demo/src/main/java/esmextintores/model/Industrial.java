@@ -19,10 +19,14 @@ public class Industrial {
     private String numero;
     private String nomeEmpresa;
 
-    public Industrial() {
-    }
+    private String fk_Cliente_numerocadastro;
 
-    public Industrial(String cnpj, String telefone, String estado, String bairro, String cep, String rua, String numero, String nomeEmpresa) {
+
+    // Construtor padrão
+    public Industrial() {}
+
+    // Construtor completo com os novos campos
+    public Industrial(String cnpj, String telefone, String estado, String bairro, String cep, String rua, String numero, String nomeEmpresa, String fk_Cliente_numerocadastro, String fk_Cliente_numerocadastro_1) {
         this.cnpj = cnpj;
         this.telefone = telefone;
         this.estado = estado;
@@ -31,8 +35,10 @@ public class Industrial {
         this.rua = rua;
         this.numero = numero;
         this.nomeEmpresa = nomeEmpresa;
+        this.fk_Cliente_numerocadastro = fk_Cliente_numerocadastro;
     }
 
+    // Getters e setters
     public String getCnpj() {
         return cnpj;
     }
@@ -95,5 +101,13 @@ public class Industrial {
 
     public void setNomeEmpresa(String nomeEmpresa) {
         this.nomeEmpresa = nomeEmpresa;
+    }
+
+    public String getFk_Cliente_numerocadastro() {
+        return fk_Cliente_numerocadastro;
+    }
+
+    public void setFk_Cliente_numerocadastro(String fk_Cliente_numerocadastro) {
+        this.fk_Cliente_numerocadastro = fk_Cliente_numerocadastro;
     }
 }

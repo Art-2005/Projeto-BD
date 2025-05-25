@@ -18,10 +18,11 @@ public class Balcao {
     private String rua;
     private String numero;
 
-    public Balcao() {
-    }
+    private String fk_Cliente_numerocadastro; // <- Adicionado aqui
 
-    public Balcao(String cnpj, String telefone, String estado, String bairro, String cep, String rua, String numero) {
+    public Balcao() {}
+
+    public Balcao(String cnpj, String telefone, String estado, String bairro, String cep, String rua, String numero, String fk_Cliente_numerocadastro) {
         this.cnpj = cnpj;
         this.telefone = telefone;
         this.estado = estado;
@@ -29,8 +30,10 @@ public class Balcao {
         this.cep = cep;
         this.rua = rua;
         this.numero = numero;
+        this.fk_Cliente_numerocadastro = fk_Cliente_numerocadastro;
     }
 
+    // Getters e Setters
     public String getCnpj() {
         return cnpj;
     }
@@ -85,5 +88,13 @@ public class Balcao {
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public String getFk_Cliente_numerocadastro() {
+        return fk_Cliente_numerocadastro;
+    }
+
+    public void setFk_Cliente_numerocadastro(String fk_Cliente_numerocadastro) {
+        this.fk_Cliente_numerocadastro = fk_Cliente_numerocadastro;
     }
 }
