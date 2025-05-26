@@ -70,3 +70,11 @@ A interface backend estará funcionando localmente.
 - 🐿️ **DBeaver** — Gerenciador de Banco de Dados
 
 ---
+
+## Modelo conceitual
+
+![alt text](<Modelo_Conceitual (1).png>)
+
+## Modelo lógico
+
+![alt text](Modelo_lógico.png)
