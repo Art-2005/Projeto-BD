@@ -78,3 +78,7 @@ A interface backend estará funcionando localmente.
 ## Modelo lógico
 
 ![alt text](Modelo_lógico.png)
+
+## Link para o docs do relatório da primeira entrega corrigido
+
+(https://docs.google.com/document/d/11DDxIlrmRlmx9aK16ypmrDCZb6MI3MhmdRDKhiwBbc0/edit?tab=t.0)
